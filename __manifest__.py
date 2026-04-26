@@ -89,7 +89,7 @@ Replace the standard Odoo PDF reports with beautifully designed templates for:
     ],
 
     'images': ['static/description/banner.gif'],
-    'price': 98.3,
+    'price': 644.48,
     'currency': 'USD',
     'installable': True,
     'application': False,
