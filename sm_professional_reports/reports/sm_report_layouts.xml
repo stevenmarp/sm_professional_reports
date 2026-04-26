@@ -253,7 +253,7 @@
         </div>
     </template>
 
-    <!-- Dispatcher: pick classic / modern / slim based on style.template -->
+    <!-- Dispatcher: pick template based on style.template -->
     <template id="sm_pro_dispatcher">
         <t t-call="sm_professional_reports.sm_pro_style_css"/>
         <div class="sm-pro-page">
@@ -262,6 +262,30 @@
             </t>
             <t t-elif="style.template == 'slim'">
                 <t t-call="sm_professional_reports.sm_pro_template_slim"/>
+            </t>
+            <t t-elif="style.template == 'retro'">
+                <t t-call="sm_professional_reports.sm_pro_template_retro"/>
+            </t>
+            <t t-elif="style.template == 'bold'">
+                <t t-call="sm_professional_reports.sm_pro_template_bold"/>
+            </t>
+            <t t-elif="style.template == 'elegant'">
+                <t t-call="sm_professional_reports.sm_pro_template_elegant"/>
+            </t>
+            <t t-elif="style.template == 'corporate'">
+                <t t-call="sm_professional_reports.sm_pro_template_corporate"/>
+            </t>
+            <t t-elif="style.template == 'minimal'">
+                <t t-call="sm_professional_reports.sm_pro_template_minimal"/>
+            </t>
+            <t t-elif="style.template == 'accent'">
+                <t t-call="sm_professional_reports.sm_pro_template_accent"/>
+            </t>
+            <t t-elif="style.template == 'executive'">
+                <t t-call="sm_professional_reports.sm_pro_template_executive"/>
+            </t>
+            <t t-elif="style.template == 'striped'">
+                <t t-call="sm_professional_reports.sm_pro_template_striped"/>
             </t>
             <t t-else="">
                 <t t-call="sm_professional_reports.sm_pro_template_classic"/>

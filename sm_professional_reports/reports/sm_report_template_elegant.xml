@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================
+         ELEGANT TEMPLATE
+         Refined: thin borders, subtle backgrounds,
+         centered header, generous whitespace.
+         ============================================ -->
+    <template id="sm_pro_template_elegant">
+        <!-- Centered header -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img t-if="company.logo"
+                 t-att-src="image_data_uri(company.logo)"
+                 style="max-height: 55px; margin-bottom: 8px;"/>
+            <div class="sm-pro-company-name"
+                 style="font-size: 18px; font-weight: 600; letter-spacing: 1px;"
+                 t-out="company.name"/>
+            <div style="color: #aaa; font-size: 10px;">
+                <t t-if="company.street"><t t-out="company.street"/></t>
+                <t t-if="company.city"> · <t t-out="company.city"/></t>
+                <t t-if="company.country_id"> · <t t-out="company.country_id.name"/></t>
+            </div>
+        </div>
+
+        <!-- Thin separator -->
+        <div t-attf-style="border-bottom: 1px solid #{style.theme_color or '#74495f'};
+                            margin-bottom: 16px;"/>
+
+        <!-- Title + info row -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="vertical-align: top; width: 50%;">
+                    <div class="sm-pro-doc-title"
+                         style="font-size: 22px; font-weight: 300;
+                                letter-spacing: 1px; margin-bottom: 6px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </div>
+                    <div t-if="doc_number" style="color: #888; font-size: 14px;"
+                         t-out="doc_number"/>
+                </td>
+                <td style="vertical-align: top;">
+                    <table class="sm-pro-info-table" style="width: 100%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #aaa; font-size: 10px;" t-out="row[0]"/>
+                            <td style="text-align: right;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Partner in a subtle box -->
+        <div t-attf-style="padding: 12px 16px; margin-bottom: 16px;
+                            border: 1px solid #{style.theme_color or '#74495f'}20;
+                            background: #{style.even_row_color or '#f6f0f3'}80;
+                            border-radius: 6px;">
+            <div style="text-transform: uppercase; font-size: 9px; color: #aaa;
+                        letter-spacing: 1px; margin-bottom: 4px;">
+                <t t-if="report_kind == 'purchase'">Vendor</t>
+                <t t-else="">Bill To</t>
+            </div>
+            <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+        </div>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 24px; padding: 10px; color: #777;
+                                     border-top: 1px solid #eee; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 24px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

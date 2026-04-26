@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================
+         BOLD TEMPLATE
+         Big impactful header, oversized doc title,
+         thick table borders, strong visual weight.
+         ============================================ -->
+    <template id="sm_pro_template_bold">
+        <!-- Full-width colored header -->
+        <div class="sm-pro-theme-bg sm-pro-theme-text"
+             style="padding: 24px; margin-bottom: 20px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="vertical-align: middle;">
+                        <img t-if="company.logo"
+                             t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 55px; background: #fff;
+                                    padding: 5px; border-radius: 6px;"/>
+                        <div t-else=""
+                             style="font-size: 22px; font-weight: 900;"
+                             t-out="company.name"/>
+                    </td>
+                    <td style="text-align: right; vertical-align: middle;">
+                        <div style="font-size: 36px; font-weight: 900;
+                                    letter-spacing: 3px; text-transform: uppercase;">
+                            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Doc number + partner -->
+        <table style="width: 100%; margin-bottom: 18px;">
+            <tr>
+                <td style="width: 55%; vertical-align: top; padding-right: 20px;">
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="vertical-align: top;">
+                    <div t-if="doc_number"
+                         t-attf-style="font-size: 20px; font-weight: 900;
+                                        color: #{style.theme_color or '#74495f'};
+                                        margin-bottom: 12px;"
+                         t-out="doc_number"/>
+                    <table class="sm-pro-info-table" style="width: 100%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="font-weight: bold; font-size: 11px;
+                                       text-transform: uppercase;" t-out="row[0]"/>
+                            <td style="text-align: right;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration"
+             style="margin-top: 28px; padding: 14px;
+                    background: #f0f0f0; border-radius: 6px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 24px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

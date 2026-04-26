@@ -7,6 +7,14 @@ TEMPLATE_SELECTION = [
     ('classic', 'Classic'),
     ('modern', 'Modern'),
     ('slim', 'Slim'),
+    ('retro', 'Retro'),
+    ('bold', 'Bold'),
+    ('elegant', 'Elegant'),
+    ('corporate', 'Corporate'),
+    ('minimal', 'Minimal'),
+    ('accent', 'Accent'),
+    ('executive', 'Executive'),
+    ('striped', 'Striped'),
 ]
 
 

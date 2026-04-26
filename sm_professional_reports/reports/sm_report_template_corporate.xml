@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================
+         CORPORATE TEMPLATE
+         Structured blue/gray, left sidebar accent,
+         info boxes, clean corporate feel.
+         ============================================ -->
+    <template id="sm_pro_template_corporate">
+        <table style="width: 100%; margin-bottom: 16px;">
+            <tr>
+                <!-- Left accent strip -->
+                <td t-attf-style="width: 6px; background: #{style.theme_color or '#74495f'};"/>
+                <td style="padding-left: 14px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img t-if="company.logo"
+                                     t-att-src="image_data_uri(company.logo)"
+                                     style="max-height: 50px;"/>
+                                <div t-else="" class="sm-pro-company-name"
+                                     style="font-size: 18px; font-weight: bold;"
+                                     t-out="company.name"/>
+                            </td>
+                            <td style="text-align: right; vertical-align: middle;">
+                                <div class="sm-pro-doc-title"
+                                     style="font-size: 20px; font-weight: 600;">
+                                    <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                                </div>
+                                <div t-if="doc_number" style="color: #888; font-size: 13px;"
+                                     t-out="doc_number"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Gray info bar -->
+        <div style="background: #f4f4f4; padding: 10px 14px; margin-bottom: 16px;
+                    border-radius: 4px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td t-foreach="info_rows" t-as="row" style="padding: 0 10px;">
+                        <span style="color: #999; font-size: 9px; text-transform: uppercase;
+                                     display: block;" t-out="row[0]"/>
+                        <span style="font-weight: bold; font-size: 12px;" t-out="row[1]"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Partner -->
+        <div style="margin-bottom: 14px; padding-left: 14px;">
+            <div style="color: #999; font-size: 9px; text-transform: uppercase;
+                        letter-spacing: 1px; margin-bottom: 4px;">
+                <t t-if="report_kind == 'purchase'">Vendor</t>
+                <t t-else="">Bill To</t>
+            </div>
+            <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+        </div>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration"
+             style="margin-top: 24px; padding: 10px 14px; background: #f9f9f9;
+                    border-left: 3px solid #ddd; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 24px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>
