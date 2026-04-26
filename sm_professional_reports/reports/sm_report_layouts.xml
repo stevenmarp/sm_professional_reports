@@ -14,6 +14,7 @@
     <!-- Inline CSS injected once per page -->
     <template id="sm_pro_style_css">
         <style type="text/css">
+            /* ========== BASE / SHARED ========== */
             .sm-pro-page {
                 color: <t t-out="style.text_color or '#333'"/>;
                 font-family: <t t-out="style.font_family or 'sans-serif'"/>;
@@ -26,35 +27,18 @@
             .sm-pro-theme-text { color: <t t-out="style.theme_text_color or '#fff'"/>; }
             .sm-pro-company-name { color: <t t-out="style.company_name_color or '#74495f'"/>; }
             .sm-pro-partner-name { color: <t t-out="style.partner_name_color or '#74495f'"/>; }
+
+            /* Base table resets */
             .sm-pro-table { width: 100%; border-collapse: collapse; }
             .sm-pro-table th, .sm-pro-table td { padding: 6px 8px; vertical-align: top; }
-            .sm-pro-table thead th {
-                background-color: <t t-out="style.theme_color or '#74495f'"/>;
-                color: <t t-out="style.theme_text_color or '#fff'"/>;
-                text-align: left;
-                font-weight: bold;
-            }
-            <t t-if="style.zebra_rows">
-                .sm-pro-table tbody tr:nth-child(odd) td {
-                    background-color: <t t-out="style.odd_row_color or '#fff'"/>;
-                }
-                .sm-pro-table tbody tr:nth-child(even) td {
-                    background-color: <t t-out="style.even_row_color or '#f6f0f3'"/>;
-                }
-            </t>
+
+            /* Base totals */
             .sm-pro-totals { width: 320px; float: right; margin-top: 14px; }
             .sm-pro-totals td { padding: 4px 8px; }
-            .sm-pro-totals tr.total {
-                background-color: <t t-out="style.theme_color or '#74495f'"/>;
-                color: <t t-out="style.theme_text_color or '#fff'"/>;
-                font-weight: bold;
-                font-size: <t t-out="(style.body_font_size or 11) + 1"/>px;
-            }
-            .sm-pro-footer-line {
-                border-top: 2px solid <t t-out="style.theme_color or '#74495f'"/>;
-                padding-top: 6px;
-                color: #666;
-            }
+
+            /* Base footer */
+            .sm-pro-footer-line { padding-top: 6px; color: #666; }
+
             .sm-pro-doc-title {
                 color: <t t-out="style.theme_color or '#74495f'"/>;
                 font-size: 26px;
@@ -65,9 +49,392 @@
             .sm-pro-aiw {
                 margin-top: 10px;
                 padding: 8px 12px;
+                font-style: italic;
+            }
+
+            /* ========== CLASSIC ========== */
+            .sm-tpl-classic .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#74495f'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+                border-bottom: 2px solid <t t-out="style.theme_color or '#74495f'"/>;
+            }
+            .sm-tpl-classic .sm-pro-table tbody td {
+                border-bottom: 1px solid #e0e0e0;
+            }
+            <t t-if="style.zebra_rows">
+                .sm-tpl-classic .sm-pro-table tbody tr:nth-child(even) td {
+                    background-color: <t t-out="style.even_row_color or '#f6f0f3'"/>;
+                }
+            </t>
+            .sm-tpl-classic .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#74495f'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+            }
+            .sm-tpl-classic .sm-pro-footer-line {
+                border-top: 2px solid <t t-out="style.theme_color or '#74495f'"/>;
+            }
+            .sm-tpl-classic .sm-pro-aiw {
                 background-color: <t t-out="style.even_row_color or '#f6f0f3'"/>;
                 border-left: 4px solid <t t-out="style.theme_color or '#74495f'"/>;
-                font-style: italic;
+            }
+
+            /* ========== MODERN ========== */
+            .sm-tpl-modern .sm-pro-table {
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            .sm-tpl-modern .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#1abc9c'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 10px;
+                letter-spacing: 0.5px;
+                padding: 10px 8px;
+            }
+            .sm-tpl-modern .sm-pro-table tbody td {
+                border: none;
+                padding: 8px;
+            }
+            .sm-tpl-modern .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#eafaf6'"/>;
+            }
+            .sm-tpl-modern .sm-pro-totals {
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            .sm-tpl-modern .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#1abc9c'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+            }
+            .sm-tpl-modern .sm-pro-footer-line {
+                border-top: 3px solid <t t-out="style.theme_color or '#1abc9c'"/>;
+                border-radius: 0 0 6px 6px;
+            }
+            .sm-tpl-modern .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#eafaf6'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#1abc9c'"/>;
+                border-radius: 0 6px 6px 0;
+            }
+
+            /* ========== SLIM ========== */
+            .sm-tpl-slim .sm-pro-table thead th {
+                background: none;
+                color: <t t-out="style.text_color or '#333'"/>;
+                font-weight: normal;
+                text-transform: uppercase;
+                font-size: 9px;
+                letter-spacing: 1.5px;
+                border-bottom: 1px solid #333;
+                padding: 4px 8px;
+            }
+            .sm-tpl-slim .sm-pro-table tbody td {
+                border: none;
+                padding: 5px 8px;
+                border-bottom: 1px dotted #ccc;
+            }
+            .sm-tpl-slim .sm-pro-totals tr.total {
+                background: none;
+                color: <t t-out="style.text_color or '#333'"/>;
+                font-weight: bold;
+                border-top: 1px solid #333;
+                border-bottom: 1px solid #333;
+            }
+            .sm-tpl-slim .sm-pro-footer-line {
+                border-top: 1px solid #999;
+            }
+            .sm-tpl-slim .sm-pro-aiw {
+                background: none;
+                border-left: 2px solid #999;
+                color: #666;
+            }
+
+            /* ========== RETRO ========== */
+            .sm-tpl-retro .sm-pro-table {
+                border: 2px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+            }
+            .sm-tpl-retro .sm-pro-table thead th {
+                background: none;
+                color: <t t-out="style.theme_color or '#8b5e3c'"/>;
+                font-weight: bold;
+                border-bottom: 2px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-size: 10px;
+            }
+            .sm-tpl-retro .sm-pro-table tbody td {
+                border-bottom: 1px dashed <t t-out="style.theme_color or '#8b5e3c'"/>40;
+            }
+            .sm-tpl-retro .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#faf3eb'"/>;
+            }
+            .sm-tpl-retro .sm-pro-totals {
+                border: 2px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+            }
+            .sm-tpl-retro .sm-pro-totals tr.total {
+                background: none;
+                color: <t t-out="style.theme_color or '#8b5e3c'"/>;
+                font-weight: bold;
+                border-top: 2px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+            }
+            .sm-tpl-retro .sm-pro-footer-line {
+                border-top: 2px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+            }
+            .sm-tpl-retro .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#faf3eb'"/>;
+                border-left: 3px double <t t-out="style.theme_color or '#8b5e3c'"/>;
+            }
+
+            /* ========== BOLD ========== */
+            .sm-tpl-bold .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#e74c3c'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: 900;
+                font-size: 12px;
+                text-transform: uppercase;
+                padding: 10px 8px;
+                border-bottom: 3px solid #00000030;
+            }
+            .sm-tpl-bold .sm-pro-table tbody td {
+                border-bottom: 2px solid #f0f0f0;
+                padding: 8px;
+                font-weight: 500;
+            }
+            .sm-tpl-bold .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#fdecea'"/>;
+            }
+            .sm-tpl-bold .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#e74c3c'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: 900;
+                font-size: 14px;
+            }
+            .sm-tpl-bold .sm-pro-footer-line {
+                border-top: 4px solid <t t-out="style.theme_color or '#e74c3c'"/>;
+            }
+            .sm-tpl-bold .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#fdecea'"/>;
+                border-left: 5px solid <t t-out="style.theme_color or '#e74c3c'"/>;
+                font-weight: 600;
+            }
+
+            /* ========== ELEGANT ========== */
+            .sm-tpl-elegant .sm-pro-table thead th {
+                background: none;
+                color: <t t-out="style.theme_color or '#9b59b6'"/>;
+                font-weight: 600;
+                border-bottom: 1px solid <t t-out="style.theme_color or '#9b59b6'"/>;
+                padding: 8px;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .sm-tpl-elegant .sm-pro-table tbody td {
+                border: none;
+                padding: 7px 8px;
+            }
+            .sm-tpl-elegant .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#f5eef8'"/>;
+            }
+            .sm-tpl-elegant .sm-pro-table tbody tr:last-child td {
+                border-bottom: 1px solid <t t-out="style.theme_color or '#9b59b6'"/>40;
+            }
+            .sm-tpl-elegant .sm-pro-totals tr.total {
+                background: none;
+                color: <t t-out="style.theme_color or '#9b59b6'"/>;
+                font-weight: bold;
+                border-top: 1px solid <t t-out="style.theme_color or '#9b59b6'"/>;
+                border-bottom: 1px solid <t t-out="style.theme_color or '#9b59b6'"/>;
+            }
+            .sm-tpl-elegant .sm-pro-footer-line {
+                border-top: 1px solid <t t-out="style.theme_color or '#9b59b6'"/>40;
+            }
+            .sm-tpl-elegant .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#f5eef8'"/>;
+                border-left: 3px solid <t t-out="style.theme_color or '#9b59b6'"/>;
+                border-radius: 0 6px 6px 0;
+            }
+
+            /* ========== CORPORATE ========== */
+            .sm-tpl-corporate .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#2c3e50'"/>;
+                color: #fff;
+                font-weight: bold;
+                font-size: 10px;
+                text-transform: uppercase;
+                border: 1px solid <t t-out="style.theme_color or '#2c3e50'"/>;
+            }
+            .sm-tpl-corporate .sm-pro-table tbody td {
+                border: 1px solid #e8e8e8;
+                padding: 6px 8px;
+            }
+            .sm-tpl-corporate .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#eef1f4'"/>;
+            }
+            .sm-tpl-corporate .sm-pro-totals {
+                border: 1px solid <t t-out="style.theme_color or '#2c3e50'"/>;
+            }
+            .sm-tpl-corporate .sm-pro-totals td {
+                border-bottom: 1px solid #e8e8e8;
+            }
+            .sm-tpl-corporate .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#2c3e50'"/>;
+                color: #fff;
+                font-weight: bold;
+            }
+            .sm-tpl-corporate .sm-pro-totals tr.total td {
+                border: none;
+            }
+            .sm-tpl-corporate .sm-pro-footer-line {
+                border-top: 3px solid <t t-out="style.theme_color or '#2c3e50'"/>;
+                background: #f4f4f4;
+                padding: 8px;
+                border-radius: 0 0 4px 4px;
+            }
+            .sm-tpl-corporate .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#eef1f4'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#2c3e50'"/>;
+            }
+
+            /* ========== MINIMAL ========== */
+            .sm-tpl-minimal .sm-pro-table thead th {
+                background: none;
+                color: #bbb;
+                font-weight: normal;
+                text-transform: uppercase;
+                font-size: 9px;
+                letter-spacing: 2px;
+                border-bottom: 1px solid #eee;
+                padding: 4px 8px;
+            }
+            .sm-tpl-minimal .sm-pro-table tbody td {
+                border: none;
+                padding: 6px 8px;
+            }
+            .sm-tpl-minimal .sm-pro-table tbody tr:not(:last-child) td {
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .sm-tpl-minimal .sm-pro-totals tr.total {
+                background: none;
+                color: <t t-out="style.text_color or '#333'"/>;
+                font-weight: 600;
+                border-top: 1px solid #ddd;
+            }
+            .sm-tpl-minimal .sm-pro-footer-line {
+                border-top: 1px solid #eee;
+                color: #ccc;
+            }
+            .sm-tpl-minimal .sm-pro-aiw {
+                background: none;
+                border-left: 2px solid #ddd;
+                color: #999;
+            }
+
+            /* ========== ACCENT ========== */
+            .sm-tpl-accent .sm-pro-table thead th {
+                background: none;
+                color: <t t-out="style.theme_color or '#e67e22'"/>;
+                font-weight: bold;
+                border-bottom: 3px solid <t t-out="style.theme_color or '#e67e22'"/>;
+                text-transform: uppercase;
+                font-size: 10px;
+            }
+            .sm-tpl-accent .sm-pro-table tbody td {
+                border: none;
+                border-left: 3px solid transparent;
+                padding: 7px 8px;
+            }
+            .sm-tpl-accent .sm-pro-table tbody tr:hover td,
+            .sm-tpl-accent .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#fdf2e9'"/>;
+                border-left-color: <t t-out="style.theme_color or '#e67e22'"/>;
+            }
+            .sm-tpl-accent .sm-pro-totals tr.total {
+                background: none;
+                color: <t t-out="style.theme_color or '#e67e22'"/>;
+                font-weight: bold;
+                border-top: 3px solid <t t-out="style.theme_color or '#e67e22'"/>;
+            }
+            .sm-tpl-accent .sm-pro-footer-line {
+                border-top: 3px solid <t t-out="style.theme_color or '#e67e22'"/>;
+            }
+            .sm-tpl-accent .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#fdf2e9'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#e67e22'"/>;
+            }
+
+            /* ========== EXECUTIVE ========== */
+            .sm-tpl-executive .sm-pro-table thead th {
+                background-color: #1a1a2e;
+                color: <t t-out="style.theme_color or '#d4a843'"/>;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 10px;
+                letter-spacing: 1px;
+                padding: 10px 8px;
+                border-bottom: 2px solid <t t-out="style.theme_color or '#d4a843'"/>;
+            }
+            .sm-tpl-executive .sm-pro-table tbody td {
+                border-bottom: 1px solid #f0f0f0;
+                padding: 8px;
+            }
+            .sm-tpl-executive .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#f9f6ed'"/>;
+            }
+            .sm-tpl-executive .sm-pro-totals {
+                border: 1px solid #1a1a2e;
+            }
+            .sm-tpl-executive .sm-pro-totals tr.total {
+                background-color: #1a1a2e;
+                color: <t t-out="style.theme_color or '#d4a843'"/>;
+                font-weight: bold;
+            }
+            .sm-tpl-executive .sm-pro-footer-line {
+                border-top: 2px solid #1a1a2e;
+            }
+            .sm-tpl-executive .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#f9f6ed'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#d4a843'"/>;
+            }
+
+            /* ========== STRIPED ========== */
+            .sm-tpl-striped .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#27ae60'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+            .sm-tpl-striped .sm-pro-table tbody td {
+                border: none;
+                padding: 8px;
+            }
+            .sm-tpl-striped .sm-pro-table tbody tr:nth-child(odd) td {
+                background-color: <t t-out="style.even_row_color or '#eafaf1'"/>;
+            }
+            .sm-tpl-striped .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: #fff;
+            }
+            .sm-tpl-striped .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#27ae60'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+            }
+            .sm-tpl-striped .sm-pro-totals td {
+                border-bottom: 1px solid <t t-out="style.even_row_color or '#eafaf1'"/>;
+            }
+            .sm-tpl-striped .sm-pro-footer-line {
+                background-color: <t t-out="style.even_row_color or '#eafaf1'"/>;
+                border: none;
+                padding: 8px;
+                border-radius: 4px;
+            }
+            .sm-tpl-striped .sm-pro-aiw {
+                background-color: <t t-out="style.even_row_color or '#eafaf1'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#27ae60'"/>;
             }
         </style>
     </template>
@@ -256,7 +623,7 @@
     <!-- Dispatcher: pick template based on style.template -->
     <template id="sm_pro_dispatcher">
         <t t-call="sm_professional_reports.sm_pro_style_css"/>
-        <div class="sm-pro-page">
+        <div t-attf-class="sm-pro-page sm-tpl-#{style.template or 'classic'}">
             <t t-if="style.template == 'modern'">
                 <t t-call="sm_professional_reports.sm_pro_template_modern"/>
             </t>
