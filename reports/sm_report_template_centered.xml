@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CENTERED — Based on asri_dev Cash Requisition layout
+         Centered logo, centered underlined title, 6-column paired
+         metadata grid, lines, approval signature table at bottom. -->
+    <template id="sm_pro_template_centered">
+        <!-- Centered logo -->
+        <div style="text-align: center; margin-bottom: 6px;">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                 style="height: 50px; display: inline-block;"/>
+        </div>
+
+        <!-- Centered underlined title -->
+        <h1 t-attf-style="text-align: center; text-decoration: underline; margin: 4px 0 14px 0;
+                           font-size: 20px; color: #{style.theme_color or '#333'};">
+            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+        </h1>
+
+        <!-- 6-column paired metadata grid -->
+        <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-bottom: 14px;">
+            <t t-set="half" t-value="(len(info_rows) + 1) // 2"/>
+            <t t-foreach="range(half)" t-as="i">
+                <tr style="font-weight: bold;">
+                    <!-- Left pair -->
+                    <td style="width: 15%; padding: 3px 6px;" t-out="info_rows[i][0]"/>
+                    <td style="width: 3%; text-align: center;">:</td>
+                    <td style="width: 30%; padding: 3px 6px;" t-out="info_rows[i][1]"/>
+                    <!-- Right pair -->
+                    <t t-if="i + half &lt; len(info_rows)">
+                        <td style="width: 15%; padding: 3px 6px;" t-out="info_rows[i + half][0]"/>
+                        <td style="width: 3%; text-align: center;">:</td>
+                        <td style="width: 30%; padding: 3px 6px;" t-out="info_rows[i + half][1]"/>
+                    </t>
+                    <t t-else="">
+                        <td colspan="3"/>
+                    </t>
+                </tr>
+            </t>
+        </table>
+
+        <!-- Partner block -->
+        <div style="margin-bottom: 14px; padding: 8px; font-size: 12px;">
+            <strong style="text-transform: uppercase; font-size: 10px; color: #999;">
+                <t t-if="report_kind == 'purchase'">Vendor</t>
+                <t t-else="">Customer</t>
+            </strong>
+            <div style="margin-top: 4px;">
+                <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+            </div>
+        </div>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px; clear: both;
+                    font-size: 11px; border-top: 1px solid #ddd;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Approval signature table -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 11px;">
+            <tr>
+                <td style="border: 1px solid #999; text-align: center; padding: 6px; width: 25%; font-weight: bold;">
+                    Created By
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 6px; width: 25%; font-weight: bold;">
+                    Reviewed By
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 6px; width: 25%; font-weight: bold;">
+                    Acknowledged
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 6px; width: 25%; font-weight: bold;">
+                    Approved By
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #999; text-align: center; height: 55px; vertical-align: bottom; padding: 6px;">
+                    _______________
+                </td>
+                <td style="border: 1px solid #999; text-align: center; height: 55px; vertical-align: bottom; padding: 6px;">
+                    _______________
+                </td>
+                <td style="border: 1px solid #999; text-align: center; height: 55px; vertical-align: bottom; padding: 6px;">
+                    _______________
+                </td>
+                <td style="border: 1px solid #999; text-align: center; height: 55px; vertical-align: bottom; padding: 6px;">
+                    _______________
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #999; text-align: center; padding: 3px; font-size: 9px; color: #999;">
+                    Date: ___/___/______
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 3px; font-size: 9px; color: #999;">
+                    Date: ___/___/______
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 3px; font-size: 9px; color: #999;">
+                    Date: ___/___/______
+                </td>
+                <td style="border: 1px solid #999; text-align: center; padding: 3px; font-size: 9px; color: #999;">
+                    Date: ___/___/______
+                </td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

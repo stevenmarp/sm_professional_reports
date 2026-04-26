@@ -448,6 +448,130 @@
                 background-color: <t t-out="style.even_row_color or '#eafaf1'"/>;
                 border-left: 4px solid <t t-out="style.theme_color or '#27ae60'"/>;
             }
+
+            /* ===== FORMAL ===== */
+            .sm-tpl-formal .sm-pro-table thead th {
+                background-color: #fff;
+                color: <t t-out="style.theme_color or '#1a237e'"/>;
+                border-bottom: 2px solid <t t-out="style.theme_color or '#1a237e'"/>;
+                border-top: 1px solid <t t-out="style.theme_color or '#1a237e'"/>;
+                font-size: 12px; padding: 6px 8px;
+            }
+            .sm-tpl-formal .sm-pro-table tbody td {
+                border-bottom: 1px solid #ddd; padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-formal .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#e8eaf6'"/>;
+            }
+            .sm-tpl-formal .sm-pro-totals tr.total {
+                font-weight: bold; font-size: 14px;
+                border-top: 2px solid <t t-out="style.theme_color or '#1a237e'"/>;
+            }
+            .sm-tpl-formal .sm-pro-footer-line {
+                border-top: 1px solid <t t-out="style.theme_color or '#1a237e'"/>;
+            }
+            .sm-tpl-formal .sm-pro-aiw {
+                border: 1px solid #000; padding: 4px 8px; font-size: 11px;
+            }
+
+            /* ===== ROUNDED ===== */
+            .sm-tpl-rounded .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#00695c'"/>;
+                color: #fff; padding: 6px 8px; font-size: 12px;
+                border-radius: 0;
+            }
+            .sm-tpl-rounded .sm-pro-table tbody td {
+                border-bottom: 1px solid #e0e0e0; padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-rounded .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#e0f2f1'"/>;
+            }
+            .sm-tpl-rounded .sm-pro-totals tr.total {
+                font-weight: bold; font-size: 13px;
+                border-top: 2px solid <t t-out="style.theme_color or '#00695c'"/>;
+            }
+            .sm-tpl-rounded .sm-pro-footer-line {
+                border-top: 1px solid <t t-out="style.theme_color or '#00695c'"/>;
+            }
+            .sm-tpl-rounded .sm-pro-aiw {
+                font-style: italic; font-size: 11px;
+                border-bottom: 1px solid #ccc; padding: 4px 0;
+            }
+
+            /* ===== CENTERED ===== */
+            .sm-tpl-centered .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#303f9f'"/>;
+                color: #fff; text-align: center; padding: 7px 8px;
+            }
+            .sm-tpl-centered .sm-pro-table tbody td {
+                border: 1px solid #ddd; padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-centered .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#e8eaf6'"/>;
+            }
+            .sm-tpl-centered .sm-pro-totals tr.total {
+                font-weight: bold; font-size: 14px;
+                border-top: 2px solid <t t-out="style.theme_color or '#303f9f'"/>;
+            }
+            .sm-tpl-centered .sm-pro-footer-line {
+                border-top: 1px solid <t t-out="style.theme_color or '#303f9f'"/>;
+            }
+            .sm-tpl-centered .sm-pro-aiw {
+                text-align: center; background: <t t-out="style.even_row_color or '#e8eaf6'"/>;
+                padding: 6px; border-radius: 4px;
+            }
+
+            /* ===== VOUCHER ===== */
+            .sm-tpl-voucher .sm-pro-table {
+                border: 1px solid #000;
+            }
+            .sm-tpl-voucher .sm-pro-table thead th {
+                border: 1px solid #000; background: <t t-out="style.theme_color or '#34495e'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                text-align: center; padding: 6px;
+            }
+            .sm-tpl-voucher .sm-pro-table tbody td {
+                border-right: 1px solid #000; border-left: 1px solid #000;
+                padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-voucher .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#ecf0f1'"/>;
+            }
+            .sm-tpl-voucher .sm-pro-totals tr.total {
+                font-weight: bold; border-top: 2px solid #000;
+            }
+            .sm-tpl-voucher .sm-pro-footer-line {
+                border-top: 1px solid #000;
+            }
+            .sm-tpl-voucher .sm-pro-aiw {
+                background: #f5f5f5; border: 1px solid #ccc; padding: 4px 8px;
+            }
+
+            /* ===== GRID ===== */
+            .sm-tpl-grid .sm-pro-table {
+                border: 1px solid #444;
+            }
+            .sm-tpl-grid .sm-pro-table thead th {
+                border: 1px solid #444; background: #f8f8f8;
+                color: <t t-out="style.theme_color or '#37474f'"/>;
+                font-weight: bold; padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-grid .sm-pro-table tbody td {
+                border: 1px solid #444; padding: 5px 8px; font-size: 11px;
+            }
+            .sm-tpl-grid .sm-pro-table tbody tr:nth-child(even) td {
+                background-color: <t t-out="style.even_row_color or '#eceff1'"/>;
+            }
+            .sm-tpl-grid .sm-pro-totals tr.total {
+                font-weight: bold; border-top: 2px solid #444;
+            }
+            .sm-tpl-grid .sm-pro-footer-line {
+                border-top: 1px solid #444;
+            }
+            .sm-tpl-grid .sm-pro-aiw {
+                border: 1px solid #444; padding: 4px 8px; font-size: 11px;
+                background: #f8f8f8;
+            }
         </style>
     </template>
 
@@ -665,6 +789,21 @@
             </t>
             <t t-elif="style.template == 'striped'">
                 <t t-call="sm_professional_reports.sm_pro_template_striped"/>
+            </t>
+            <t t-elif="style.template == 'formal'">
+                <t t-call="sm_professional_reports.sm_pro_template_formal"/>
+            </t>
+            <t t-elif="style.template == 'rounded'">
+                <t t-call="sm_professional_reports.sm_pro_template_rounded"/>
+            </t>
+            <t t-elif="style.template == 'centered'">
+                <t t-call="sm_professional_reports.sm_pro_template_centered"/>
+            </t>
+            <t t-elif="style.template == 'voucher'">
+                <t t-call="sm_professional_reports.sm_pro_template_voucher"/>
+            </t>
+            <t t-elif="style.template == 'grid'">
+                <t t-call="sm_professional_reports.sm_pro_template_grid"/>
             </t>
             <t t-else="">
                 <t t-call="sm_professional_reports.sm_pro_template_classic"/>

@@ -15,6 +15,11 @@ TEMPLATE_SELECTION = [
     ('accent', 'Accent'),
     ('executive', 'Executive'),
     ('striped', 'Striped'),
+    ('formal', 'Formal'),
+    ('rounded', 'Rounded'),
+    ('centered', 'Centered'),
+    ('voucher', 'Voucher'),
+    ('grid', 'Grid'),
 ]
 
 

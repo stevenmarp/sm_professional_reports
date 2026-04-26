@@ -118,6 +118,57 @@
             <field name="partner_name_color">#229954</field>
             <field name="even_row_color">#eafaf1</field>
         </record>
+
+        <record id="style_formal_default" model="sm.report.style">
+            <field name="name">Formal — Navy</field>
+            <field name="active">True</field>
+            <field name="template">formal</field>
+            <field name="theme_color">#1a237e</field>
+            <field name="company_name_color">#1a237e</field>
+            <field name="partner_name_color">#283593</field>
+            <field name="even_row_color">#e8eaf6</field>
+        </record>
+
+        <record id="style_rounded_default" model="sm.report.style">
+            <field name="name">Rounded — Teal</field>
+            <field name="active">True</field>
+            <field name="template">rounded</field>
+            <field name="theme_color">#00695c</field>
+            <field name="company_name_color">#00695c</field>
+            <field name="partner_name_color">#004d40</field>
+            <field name="even_row_color">#e0f2f1</field>
+        </record>
+
+        <record id="style_centered_default" model="sm.report.style">
+            <field name="name">Centered — Indigo</field>
+            <field name="active">True</field>
+            <field name="template">centered</field>
+            <field name="theme_color">#303f9f</field>
+            <field name="company_name_color">#303f9f</field>
+            <field name="partner_name_color">#1a237e</field>
+            <field name="even_row_color">#e8eaf6</field>
+        </record>
+
+        <record id="style_voucher_default" model="sm.report.style">
+            <field name="name">Voucher — Slate</field>
+            <field name="active">True</field>
+            <field name="template">voucher</field>
+            <field name="theme_color">#34495e</field>
+            <field name="theme_text_color">#ffffff</field>
+            <field name="company_name_color">#34495e</field>
+            <field name="partner_name_color">#2c3e50</field>
+            <field name="even_row_color">#ecf0f1</field>
+        </record>
+
+        <record id="style_grid_default" model="sm.report.style">
+            <field name="name">Grid — Charcoal</field>
+            <field name="active">True</field>
+            <field name="template">grid</field>
+            <field name="theme_color">#37474f</field>
+            <field name="company_name_color">#37474f</field>
+            <field name="partner_name_color">#263238</field>
+            <field name="even_row_color">#eceff1</field>
+        </record>
     </data>
 
     <!-- Force-activate all demo styles on upgrade (noupdate=0) -->
@@ -153,6 +204,21 @@
             <field name="active" eval="True"/>
         </record>
         <record id="style_striped_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_formal_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_rounded_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_centered_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_voucher_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_grid_default" model="sm.report.style" forcecreate="1">
             <field name="active" eval="True"/>
         </record>
     </data>

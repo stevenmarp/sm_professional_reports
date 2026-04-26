@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- FORMAL — Based on asri_dev POM "Spaced INVOICE + TO Box"
+         Small logo left, address center, company bold right.
+         Spaced I N V O I C E title, bordered TO address box left,
+         bordered-input metadata right. DESCRIPTION | AMOUNT table. -->
+    <template id="sm_pro_template_formal">
+        <!-- 3-zone header: logo | address | company name -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 6px;">
+            <tr>
+                <td style="width: 10%; text-align: left; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 50px;"/>
+                </td>
+                <td style="width: 50%; text-align: left; vertical-align: top; line-height: 1.3; font-size: 11px; padding-left: 8px;">
+                    <t t-if="company.street"><span t-out="company.street"/><br/></t>
+                    <t t-if="company.street2"><span t-out="company.street2"/><br/></t>
+                    <t t-if="company.phone">Tel: <span t-out="company.phone"/></t>
+                </td>
+                <td style="width: 40%; text-align: right; vertical-align: top;">
+                    <strong class="sm-pro-company-name" style="font-size: 16px;"
+                            t-out="company.name"/>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Spaced title -->
+        <h2 t-attf-style="float: left; letter-spacing: 8px; font-size: 22px;
+                           color: #{style.theme_color or '#333'}; margin: 8px 0 6px 0;">
+            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+        </h2>
+
+        <!-- TO box left + metadata input-fields right -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+            <tr>
+                <!-- TO box -->
+                <td style="width: 50%; vertical-align: top;">
+                    <div t-attf-style="border: 1px solid #000; padding: 10px; min-height: 100px;
+                                        margin-top: -2%;">
+                        <div style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">TO :</div>
+                        <strong t-out="partner.name"/>
+                        <div style="font-size: 11px; margin-top: 4px;">
+                            <t t-if="partner.street"><span t-out="partner.street"/><br/></t>
+                            <t t-if="partner.street2"><span t-out="partner.street2"/><br/></t>
+                            <t t-if="partner.city"><span t-out="partner.city"/>
+                                <t t-if="partner.state_id">, <span t-out="partner.state_id.name"/></t>
+                            </t>
+                        </div>
+                    </div>
+                </td>
+
+                <!-- Metadata input-style boxes -->
+                <td style="width: 50%; vertical-align: top; padding-left: 20px;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 14px;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="width: 35%; font-weight: bold; padding: 4px 0; font-size: 12px;"
+                                t-out="row[0]"/>
+                            <td style="width: 5%; padding: 4px 0;">:</td>
+                            <td style="border: 1px solid #000; padding: 3px 6px; font-size: 12px; margin-bottom: 4px;"
+                                t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px;
+                    border-top: 1px dashed #ccc; font-size: 11px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Dual signature -->
+        <table style="width: 80%; margin: 40px auto 0 auto;">
+            <tr>
+                <td style="width: 50%; text-align: center;">
+                    <div style="font-size: 10px; color: #666;">Developed by</div>
+                    <div style="height: 50px;"/>
+                    <div style="border-top: 1px solid #999; width: 70%; margin: 0 auto; font-size: 11px;">
+                        _______________
+                    </div>
+                </td>
+                <td style="width: 50%; text-align: center;">
+                    <div style="font-size: 10px; color: #666;">Managed by</div>
+                    <div style="height: 50px;"/>
+                    <div style="border-top: 1px solid #999; width: 70%; margin: 0 auto; font-size: 11px;">
+                        _______________
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

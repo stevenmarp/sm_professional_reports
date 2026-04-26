@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ROUNDED — Based on asri_dev Mall "Bordered Rounded-Box" Invoice
+         Logo left 20%, company+address center 35%, customer info in
+         bordered rounded box right ~50%. Indonesian-style layout. -->
+    <template id="sm_pro_template_rounded">
+        <!-- 3-zone header: logo | company info | customer rounded box -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
+            <tr>
+                <!-- Logo -->
+                <td style="width: 18%; text-align: left; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 80px;"/>
+                </td>
+                <!-- Company info center -->
+                <td style="width: 30%; text-align: left; vertical-align: top; line-height: 1.3; font-size: 11px; padding: 0 8px;">
+                    <strong class="sm-pro-company-name" style="font-size: 13px;"
+                            t-out="company.name"/>
+                    <div style="margin-top: 2px;">
+                        <t t-if="company.street"><span t-out="company.street"/><br/></t>
+                        <t t-if="company.street2"><span t-out="company.street2"/><br/></t>
+                        <t t-if="company.city"><span t-out="company.city"/>
+                            <t t-if="company.state_id">, <span t-out="company.state_id.name"/></t>
+                            <br/>
+                        </t>
+                        <t t-if="company.phone">Tel. <span t-out="company.phone"/></t>
+                    </div>
+                    <!-- Title offset into company zone -->
+                    <h2 t-attf-style="margin: 6px 0 0 60px; font-size: 18px;
+                                       color: #{style.theme_color or '#333'};">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </h2>
+                </td>
+                <!-- Customer in rounded bordered box -->
+                <td t-attf-style="width: 52%; vertical-align: top; border: 1px solid #000;
+                                   padding: 8px; border-radius: 8px; line-height: 1.2;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td><strong t-out="partner.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 11px;">
+                                <t t-if="partner.street"><span t-out="partner.street"/><br/></t>
+                                <t t-if="partner.street2"><span t-out="partner.street2"/><br/></t>
+                                <t t-if="partner.city"><span t-out="partner.city"/>
+                                    <t t-if="partner.state_id">, <span t-out="partner.state_id.name"/></t>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Date / number / due date inside box -->
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 11px;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="width: 42%;" t-out="row[0]"/>
+                            <td style="width: 5%;">:</td>
+                            <td t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px;
+                    font-style: italic; font-size: 11px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Bank payment + signature right -->
+        <table style="width: 100%; margin-top: 30px;">
+            <tr>
+                <td style="width: 55%; vertical-align: top; font-size: 10px;">
+                    <div t-if="company.bank_ids" style="padding: 6px; background: #f8f8f8; border: 1px solid #eee;">
+                        <strong>Bank Transfer:</strong><br/>
+                        <t t-foreach="company.bank_ids[:2]" t-as="bank">
+                            <span t-out="bank.bank_id.name"/> — <span t-out="bank.acc_number"/><br/>
+                            a/n <span t-out="bank.acc_holder_name or company.name"/><br/>
+                        </t>
+                    </div>
+                </td>
+                <td style="width: 45%; text-align: center; vertical-align: top;">
+                    <div style="font-size: 11px; color: #666;">Authorized Signature</div>
+                    <div style="height: 55px;"/>
+                    <div style="border-top: 1px solid #999; width: 65%; margin: 0 auto; font-size: 11px;">
+                        (<t t-out="company.name"/>)
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>
