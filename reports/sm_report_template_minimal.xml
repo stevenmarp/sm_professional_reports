@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- MINIMAL — Based on asri_dev "Centered Form" (cash_request)
+         Centered logo, underlined title, 6-col metadata,
+         large amount display, dynamic approval columns. -->
+    <template id="sm_pro_template_minimal">
+        <!-- Centered logo -->
+        <div style="text-align: center; margin-bottom: 6px;">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                 style="width: 2.5cm; height: auto; display: inline-block;"/>
+        </div>
+
+        <!-- Underlined centered title -->
+        <div class="sm-pro-doc-title"
+             style="text-align: center; text-decoration: underline; font-size: 22px; margin-bottom: 16px;">
+            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+        </div>
+
+        <!-- 6-column metadata grid (cash request style) -->
+        <table style="width: 100%; margin-bottom: 18px; font-size: 11px;">
+            <t t-set="half" t-value="(len(info_rows) + 1) // 2"/>
+            <tr t-foreach="range(half)" t-as="i">
+                <td style="width: 15%; padding: 3px; font-weight: bold;"
+                    t-out="info_rows[i][0] if i &lt; len(info_rows) else ''"/>
+                <td style="width: 5%; text-align: center;">
+                    <t t-if="i &lt; len(info_rows)">:</t>
+                </td>
+                <td style="width: 30%; padding: 3px;"
+                    t-out="info_rows[i][1] if i &lt; len(info_rows) else ''"/>
+                <t t-set="j" t-value="i + half"/>
+                <td style="width: 15%; padding: 3px; font-weight: bold;"
+                    t-out="info_rows[j][0] if j &lt; len(info_rows) else ''"/>
+                <td style="width: 5%; text-align: center;">
+                    <t t-if="j &lt; len(info_rows)">:</t>
+                </td>
+                <td style="width: 30%; padding: 3px;"
+                    t-out="info_rows[j][1] if j &lt; len(info_rows) else ''"/>
+            </tr>
+        </table>
+
+        <!-- Doc number large -->
+        <div t-if="doc_number"
+             t-attf-style="font-size: 16px; font-weight: bold; color: #{style.theme_color or '#555'};
+                            margin-bottom: 10px;"
+             t-out="doc_number"/>
+
+        <!-- Partner (compact) -->
+        <div t-if="partner" style="margin-bottom: 14px; font-size: 11px;">
+            <span style="color: #999; text-transform: uppercase; font-size: 9px; letter-spacing: 1px;">
+                <t t-if="report_kind == 'purchase'">Vendor</t>
+                <t t-else="">Customer</t>:
+            </span>
+            <strong t-out="partner.name"/>
+            <t t-if="partner.city"> — <t t-out="partner.city"/></t>
+        </div>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; color: #666; font-size: 10px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

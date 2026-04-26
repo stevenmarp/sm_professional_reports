@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ELEGANT — Based on asri_dev "Rounded Box" (deposit/basic_charge)
+         Logo large, customer info in rounded-corner box, full-bordered table,
+         Indonesian-style Terbilang, signature with underline. -->
+    <template id="sm_pro_template_elegant">
+        <!-- Header: logo (large) | company info | customer rounded box -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 20%; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-width: 150px; height: auto;"/>
+                </td>
+                <td style="width: 30%; vertical-align: top; line-height: 1.4; font-size: 11px; padding-left: 4px;">
+                    <strong class="sm-pro-company-name" style="font-size: 13px;"
+                            t-out="company.name"/><br/>
+                    <t t-if="company.street"><t t-out="company.street"/><br/></t>
+                    <t t-if="company.street2"><t t-out="company.street2"/><br/></t>
+                    <t t-if="company.city"><t t-out="company.city"/>
+                        <t t-if="company.state_id">, <t t-out="company.state_id.name"/></t>
+                    </t>
+                    <t t-if="company.phone"><br/>Tel: <t t-out="company.phone"/></t>
+                    <h2 class="sm-pro-doc-title" style="font-size: 20px; margin-top: 6px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </h2>
+                </td>
+                <!-- Customer rounded box -->
+                <td t-attf-style="width: 50%; vertical-align: top; border: 1px solid #{style.theme_color or '#9b59b6'};
+                                    padding: 8px; border-radius: 8px; line-height: 1.2;">
+                    <div t-if="partner">
+                        <strong class="sm-pro-partner-name" style="font-size: 13px;"
+                                t-out="partner.name"/>
+                        <div t-if="partner.street" style="margin-top: 4px;" t-out="partner.street"/>
+                        <div t-if="partner.street2" t-out="partner.street2"/>
+                        <div>
+                            <t t-if="partner.city"><t t-out="partner.city"/></t>
+                            <t t-if="partner.state_id">, <t t-out="partner.state_id.name"/></t>
+                            <t t-if="partner.zip"> <t t-out="partner.zip"/></t>
+                        </div>
+                        <div t-if="partner.country_id" t-out="partner.country_id.name"/>
+                        <div t-if="partner.vat" style="margin-top: 4px;">VAT: <t t-out="partner.vat"/></div>
+                    </div>
+                    <!-- Info rows inside rounded box -->
+                    <table style="width: 100%; margin-top: 6px; border-top: 1px solid #eee;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="width: 40%; font-size: 10px; padding: 2px 0;" t-out="row[0]"/>
+                            <td style="width: 5%; font-size: 10px;">:</td>
+                            <td style="font-size: 10px; font-weight: bold;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Signature with underline (deposit style) -->
+        <table style="width: 100%; margin-top: 30px;">
+            <tr>
+                <td style="width: 65%; vertical-align: top; font-size: 10px;">
+                    <!-- Payment instructions area -->
+                    <t t-if="style.show_bank_in_footer and company.partner_id.bank_ids">
+                        <div style="margin-bottom: 6px;">Payment Instructions:</div>
+                        <t t-foreach="company.partner_id.bank_ids[:2]" t-as="bank">
+                            <div style="padding-left: 10px;">
+                                <strong t-out="bank.bank_name or 'Bank'"/>:
+                                <t t-out="bank.acc_number"/>
+                            </div>
+                        </t>
+                    </t>
+                </td>
+                <td style="width: 35%; text-align: center; vertical-align: top;">
+                    <div style="font-style: italic; margin-bottom: 6px;">Regards,</div>
+                    <div style="height: 60px;"/>
+                    <strong t-out="company.name"/>
+                    <div t-attf-style="border-bottom: 2px solid #{style.theme_color or '#9b59b6'};
+                                        width: 80%; margin: 4px auto 0 auto;"/>
+                </td>
+            </tr>
+        </table>
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

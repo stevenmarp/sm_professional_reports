@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- BOLD — Based on asri_dev "Clean Invoice" (media_placement)
+         Logo left, address center, company right. Spaced "I N V O I C E" title.
+         TO: box with border, info values in bordered input boxes.
+         Right-border-only table columns, currency floated left. -->
+    <template id="sm_pro_template_bold">
+        <!-- 3-col header: logo | address | company name -->
+        <table style="width: 100%; margin-bottom: 8px;">
+            <tr>
+                <td style="width: 10%; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-width: 100px; height: auto;"/>
+                </td>
+                <td style="width: 50%; vertical-align: top; line-height: 1.4; font-size: 11px;">
+                    <t t-if="company.street"><t t-out="company.street"/><br/></t>
+                    <t t-if="company.street2"><t t-out="company.street2"/><br/></t>
+                    <t t-if="company.phone">Hotline: <t t-out="company.phone"/></t>
+                </td>
+                <td style="text-align: right; vertical-align: top; padding-left: 10%; line-height: 1.1;">
+                    <strong class="sm-pro-company-name" style="font-size: 16px;"
+                            t-out="company.name"/>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Spaced title -->
+        <h2 class="sm-pro-doc-title" style="font-size: 22px; letter-spacing: 8px; margin: 10px 0 14px 0;">
+            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+        </h2>
+
+        <!-- Two-column: TO box | info fields in bordered inputs -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    <table t-attf-style="width: 100%; border: 1px solid #{style.theme_color or '#e74c3c'}; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 6px; font-size: 14px;">
+                                <strong>TO :</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px 6px;">
+                                <strong class="sm-pro-partner-name" style="font-size: 14px;"
+                                        t-out="partner.name if partner else ''"/>
+                                <div t-if="partner">
+                                    <div t-if="partner.street" style="margin-top: 4px;" t-out="partner.street"/>
+                                    <div t-if="partner.street2" t-out="partner.street2"/>
+                                    <div>
+                                        <t t-if="partner.city"><t t-out="partner.city"/></t>
+                                        <t t-if="partner.state_id">, <t t-out="partner.state_id.name"/></t>
+                                        <t t-if="partner.zip"> <t t-out="partner.zip"/></t>
+                                    </div>
+                                    <div t-if="partner.country_id" t-out="partner.country_id.name"/>
+                                    <div t-if="partner.vat" style="margin-top: 6px;">VAT: <t t-out="partner.vat"/></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 50%; vertical-align: top; padding-left: 14px;">
+                    <table style="width: 90%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="width: 35%; font-weight: bold; font-size: 11px; padding: 4px 0;"
+                                t-out="row[0]"/>
+                            <td style="width: 5%;">:</td>
+                            <td t-attf-style="border: 1px solid #{style.theme_color or '#e74c3c'};
+                                               padding: 3px 6px; font-size: 11px;"
+                                t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <!-- In Words box -->
+        <div t-if="style.amount_in_words and amount_total" style="margin-top: 12px; clear: both;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 12%; vertical-align: top;"><strong>In Words :</strong></td>
+                    <td t-attf-style="border: 1px solid #{style.theme_color or '#e74c3c'};
+                                       padding: 4px 8px; font-style: italic; font-size: 10px;">
+                        <t t-out="style.get_amount_in_words(amount_total, currency)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px;
+                    background: #f9f9f9; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Signature right-aligned -->
+        <div style="float: right; text-align: center; margin-top: 30px; font-style: italic; font-size: 10px;">
+            <div>Authorized Signature</div>
+            <div style="height: 60px;"/>
+            <div t-attf-style="border-bottom: 1px solid #{style.theme_color or '#e74c3c'}; width: 150px;">
+            </div>
+        </div>
+        <div style="clear: both; margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

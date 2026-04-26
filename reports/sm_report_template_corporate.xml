@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CORPORATE — Based on asri_dev "Box Grid" (payment_voucher)
+         Full-bordered grid on everything: 4-col metadata header,
+         all cells have borders, fixed-height data rows,
+         6-col approval/signature table at bottom. -->
+    <template id="sm_pro_template_corporate">
+        <!-- Title row like payment voucher -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
+            <tr>
+                <td style="width: 20%; vertical-align: middle; padding: 6px;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 45px;"/>
+                </td>
+                <td t-attf-style="text-align: center; padding: 8px;
+                                   border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   font-size: 16px; font-weight: bold; letter-spacing: 2px;">
+                    <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                </td>
+                <td style="width: 20%;"/>
+            </tr>
+        </table>
+
+        <!-- 4-column metadata grid (payment voucher style) -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; table-layout: fixed;">
+            <tr t-foreach="info_rows" t-as="row">
+                <td style="padding: 4px 6px; width: 15%; font-weight: bold; font-size: 10px;
+                           text-transform: uppercase;" t-out="row[0]"/>
+                <td style="padding: 4px 6px; width: 35%;" t-out="row[1]"/>
+                <td t-if="row_index == 0" style="padding: 4px 6px; width: 15%; font-weight: bold; font-size: 10px;">
+                    <t t-if="report_kind == 'purchase'">VENDOR</t>
+                    <t t-else="">CUSTOMER</t>
+                </td>
+                <td t-if="row_index == 0" style="padding: 4px 6px; width: 35%;"
+                    t-att-rowspan="len(info_rows)" t-out="partner.name if partner else ''">
+                    <div t-if="partner">
+                        <strong t-out="partner.name"/>
+                        <div t-if="partner.street" t-out="partner.street"/>
+                        <div t-if="partner.city" t-out="partner.city"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Doc number -->
+        <div t-if="doc_number" t-attf-style="font-size: 13px; font-weight: bold;
+                    color: #{style.theme_color or '#2c3e50'}; margin-bottom: 8px;"
+             t-out="doc_number"/>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px;
+                    border-left: 3px solid #ddd; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- 4-column approval signature table (payment voucher style) -->
+        <table t-attf-style="width: 100%; border-collapse: collapse; margin-top: 30px;
+                               border: 1px solid #{style.theme_color or '#2c3e50'};">
+            <tr>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 6px; text-align: center; font-weight: bold;
+                                   font-size: 10px; width: 25%;">
+                    Requested By
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 6px; text-align: center; font-weight: bold;
+                                   font-size: 10px; width: 25%;">
+                    Checked By
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 6px; text-align: center; font-weight: bold;
+                                   font-size: 10px; width: 25%;">
+                    Approved By
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 6px; text-align: center; font-weight: bold;
+                                   font-size: 10px; width: 25%;">
+                    Received By
+                </td>
+            </tr>
+            <tr>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   height: 70px; padding: 6px;"/>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   height: 70px; padding: 6px;"/>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   height: 70px; padding: 6px;"/>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   height: 70px; padding: 6px;"/>
+            </tr>
+            <tr>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 4px; text-align: center; font-size: 9px;">
+                    Date: ___/___/______
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 4px; text-align: center; font-size: 9px;">
+                    Date: ___/___/______
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 4px; text-align: center; font-size: 9px;">
+                    Date: ___/___/______
+                </td>
+                <td t-attf-style="border: 1px solid #{style.theme_color or '#2c3e50'};
+                                   padding: 4px; text-align: center; font-size: 9px;">
+                    Date: ___/___/______
+                </td>
+            </tr>
+        </table>
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>
