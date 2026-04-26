@@ -572,6 +572,209 @@
                 border: 1px solid #444; padding: 4px 8px; font-size: 11px;
                 background: #f8f8f8;
             }
+
+            /* ── Banner ── */
+            .sm-tpl-banner .sm-pro-table thead th {
+                background: #2196f3; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-banner .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-banner .sm-pro-table tbody tr:nth-child(even) td {
+                background: #e3f2fd;
+            }
+            .sm-tpl-banner .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #2196f3;
+            }
+            .sm-tpl-banner .sm-pro-footer-line {
+                border-top: 2px solid #2196f3;
+            }
+            .sm-tpl-banner .sm-pro-aiw {
+                background: #e3f2fd; padding: 5px 10px; font-size: 11px;
+                border-radius: 4px;
+            }
+
+            /* ── Sidebar ── */
+            .sm-tpl-sidebar .sm-pro-table thead th {
+                background: #6a1b9a; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-sidebar .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-sidebar .sm-pro-table tbody tr:nth-child(even) td {
+                background: #f3e5f5;
+            }
+            .sm-tpl-sidebar .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #6a1b9a;
+            }
+            .sm-tpl-sidebar .sm-pro-footer-line {
+                border-top: 2px solid #6a1b9a;
+            }
+            .sm-tpl-sidebar .sm-pro-aiw {
+                background: #f3e5f5; padding: 5px 10px; font-size: 11px;
+                border-left: 3px solid #6a1b9a;
+            }
+
+            /* ── Contrast ── */
+            .sm-tpl-contrast .sm-pro-table thead th {
+                background: #1a1a2e; color: #ff6f61; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-contrast .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-contrast .sm-pro-table tbody tr:nth-child(even) td {
+                background: #fff3f0;
+            }
+            .sm-tpl-contrast .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #ff6f61;
+            }
+            .sm-tpl-contrast .sm-pro-footer-line {
+                border-top: 2px solid #1a1a2e;
+            }
+            .sm-tpl-contrast .sm-pro-aiw {
+                background: #1a1a2e; color: #fff; padding: 5px 10px; font-size: 11px;
+                border-radius: 3px;
+            }
+
+            /* ── Split ── */
+            .sm-tpl-split .sm-pro-table thead th {
+                background: #00796b; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-split .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-split .sm-pro-table tbody tr:nth-child(even) td {
+                background: #e0f2f1;
+            }
+            .sm-tpl-split .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #00796b;
+            }
+            .sm-tpl-split .sm-pro-footer-line {
+                border-top: 2px solid #00796b;
+            }
+            .sm-tpl-split .sm-pro-aiw {
+                background: #e0f2f1; padding: 5px 10px; font-size: 11px;
+                border: 1px solid #00796b; border-radius: 4px;
+            }
+
+            /* ── Lined ── */
+            .sm-tpl-lined .sm-pro-table thead th {
+                background: transparent; color: #37474f; padding: 7px 8px; font-size: 11px;
+                border-bottom: 2px solid #546e7a; border-top: none; border-left: none; border-right: none;
+            }
+            .sm-tpl-lined .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px dashed #b0bec5;
+                border-top: none; border-left: none; border-right: none;
+            }
+            .sm-tpl-lined .sm-pro-table tbody tr:nth-child(even) td {
+                background: #eceff1;
+            }
+            .sm-tpl-lined .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #546e7a;
+            }
+            .sm-tpl-lined .sm-pro-footer-line {
+                border-top: 1px dashed #546e7a;
+            }
+            .sm-tpl-lined .sm-pro-aiw {
+                border: 1px dashed #546e7a; padding: 5px 10px; font-size: 11px;
+                background: transparent;
+            }
+
+            /* ── Boxed ── */
+            .sm-tpl-boxed .sm-pro-table {
+                border: 2px solid #5c6bc0; border-radius: 6px; overflow: hidden;
+            }
+            .sm-tpl-boxed .sm-pro-table thead th {
+                background: #5c6bc0; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-boxed .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #c5cae9;
+            }
+            .sm-tpl-boxed .sm-pro-table tbody tr:nth-child(even) td {
+                background: #e8eaf6;
+            }
+            .sm-tpl-boxed .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #5c6bc0;
+            }
+            .sm-tpl-boxed .sm-pro-footer-line {
+                border-top: 2px solid #5c6bc0;
+            }
+            .sm-tpl-boxed .sm-pro-aiw {
+                background: #e8eaf6; padding: 5px 10px; font-size: 11px;
+                border: 2px solid #5c6bc0; border-radius: 6px;
+            }
+
+            /* ── Ribbon ── */
+            .sm-tpl-ribbon .sm-pro-table thead th {
+                background: #c62828; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-ribbon .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-ribbon .sm-pro-table tbody tr:nth-child(even) td {
+                background: #ffebee;
+            }
+            .sm-tpl-ribbon .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #c62828;
+            }
+            .sm-tpl-ribbon .sm-pro-footer-line {
+                border-top: 3px solid #c62828;
+            }
+            .sm-tpl-ribbon .sm-pro-aiw {
+                background: #ffebee; padding: 5px 10px; font-size: 11px;
+                border-left: 3px solid #c62828;
+            }
+
+            /* ── Compact ── */
+            .sm-tpl-compact .sm-pro-table thead th {
+                background: #424242; color: #fff; padding: 4px 6px; font-size: 10px;
+                border: none; text-transform: uppercase; letter-spacing: 0.5px;
+            }
+            .sm-tpl-compact .sm-pro-table tbody td {
+                padding: 3px 6px; font-size: 10px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-compact .sm-pro-table tbody tr:nth-child(even) td {
+                background: #f5f5f5;
+            }
+            .sm-tpl-compact .sm-pro-totals tr.total {
+                font-weight: 700; font-size: 10px; border-top: 1px solid #424242;
+            }
+            .sm-tpl-compact .sm-pro-footer-line {
+                border-top: 1px solid #424242;
+            }
+            .sm-tpl-compact .sm-pro-aiw {
+                background: #f5f5f5; padding: 3px 6px; font-size: 9px;
+                border: 1px solid #bdbdbd;
+            }
+
+            /* ── Gradient ── */
+            .sm-tpl-gradient .sm-pro-table thead th {
+                background: linear-gradient(135deg, #667eea, #764ba2); color: #fff;
+                padding: 7px 8px; font-size: 11px; border: none;
+            }
+            .sm-tpl-gradient .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-gradient .sm-pro-table tbody tr:nth-child(even) td {
+                background: #ede7f6;
+            }
+            .sm-tpl-gradient .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #764ba2;
+            }
+            .sm-tpl-gradient .sm-pro-footer-line {
+                border-top: 2px solid #764ba2;
+            }
+            .sm-tpl-gradient .sm-pro-aiw {
+                background: linear-gradient(135deg, #667eea22, #764ba222);
+                padding: 5px 10px; font-size: 11px; border-radius: 4px;
+                border: 1px solid #764ba2;
+            }
         </style>
     </template>
 
@@ -804,6 +1007,33 @@
             </t>
             <t t-elif="style.template == 'grid'">
                 <t t-call="sm_professional_reports.sm_pro_template_grid"/>
+            </t>
+            <t t-elif="style.template == 'banner'">
+                <t t-call="sm_professional_reports.sm_pro_template_banner"/>
+            </t>
+            <t t-elif="style.template == 'sidebar'">
+                <t t-call="sm_professional_reports.sm_pro_template_sidebar"/>
+            </t>
+            <t t-elif="style.template == 'contrast'">
+                <t t-call="sm_professional_reports.sm_pro_template_contrast"/>
+            </t>
+            <t t-elif="style.template == 'split'">
+                <t t-call="sm_professional_reports.sm_pro_template_split"/>
+            </t>
+            <t t-elif="style.template == 'lined'">
+                <t t-call="sm_professional_reports.sm_pro_template_lined"/>
+            </t>
+            <t t-elif="style.template == 'boxed'">
+                <t t-call="sm_professional_reports.sm_pro_template_boxed"/>
+            </t>
+            <t t-elif="style.template == 'ribbon'">
+                <t t-call="sm_professional_reports.sm_pro_template_ribbon"/>
+            </t>
+            <t t-elif="style.template == 'compact'">
+                <t t-call="sm_professional_reports.sm_pro_template_compact"/>
+            </t>
+            <t t-elif="style.template == 'gradient'">
+                <t t-call="sm_professional_reports.sm_pro_template_gradient"/>
             </t>
             <t t-else="">
                 <t t-call="sm_professional_reports.sm_pro_template_classic"/>

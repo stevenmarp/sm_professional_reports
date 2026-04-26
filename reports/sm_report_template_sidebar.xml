@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SIDEBAR — Left colored strip with doc title, right content area -->
+    <template id="sm_pro_template_sidebar">
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+            <tr>
+                <!-- Colored sidebar -->
+                <td t-attf-style="width: 6px; background: #{style.theme_color or '#6a1b9a'};"/>
+                <td style="padding-left: 16px; vertical-align: top;">
+                    <!-- Header row -->
+                    <table style="width: 100%; margin-bottom: 12px;">
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                     style="max-height: 55px;"/>
+                                <div t-if="not company.logo" class="sm-pro-company-name"
+                                     style="font-size: 20px; font-weight: bold;" t-out="company.name"/>
+                            </td>
+                            <td style="text-align: right; vertical-align: middle;">
+                                <div class="sm-pro-doc-title" style="font-size: 22px;">
+                                    <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                                </div>
+                                <div t-if="doc_number" style="color: #666; font-size: 12px;" t-out="doc_number"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Colored thin bar separator -->
+                    <div t-attf-style="height: 2px; background: #{style.theme_color or '#6a1b9a'};
+                                        margin-bottom: 14px;"/>
+
+                    <!-- Partner + info -->
+                    <table style="width: 100%; margin-bottom: 14px;">
+                        <tr>
+                            <td style="width: 55%; vertical-align: top; padding-right: 20px;">
+                                <div style="font-size: 10px; text-transform: uppercase; color: #999; margin-bottom: 4px;">
+                                    <t t-if="report_kind == 'purchase'">Vendor</t><t t-else="">Bill To</t>
+                                </div>
+                                <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table class="sm-pro-info-table" style="width: 100%;">
+                                    <tr t-foreach="info_rows" t-as="row">
+                                        <td style="font-size: 10px; color: #999; text-transform: uppercase;"
+                                            t-out="row[0]"/>
+                                        <td style="text-align: right; font-weight: bold;" t-out="row[1]"/>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+                    <t t-call="sm_professional_reports.sm_pro_totals"/>
+                    <div t-if="narration" style="margin-top: 20px; padding: 8px; clear: both;"><div t-out="narration"/></div>
+                    <div style="margin-top: 30px;"/>
+                    <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+                </td>
+            </tr>
+        </table>
+    </template>
+</odoo>

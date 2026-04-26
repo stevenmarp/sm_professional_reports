@@ -20,6 +20,15 @@ TEMPLATE_SELECTION = [
     ('centered', 'Centered'),
     ('voucher', 'Voucher'),
     ('grid', 'Grid'),
+    ('banner', 'Banner'),
+    ('sidebar', 'Sidebar'),
+    ('contrast', 'Contrast'),
+    ('split', 'Split'),
+    ('lined', 'Lined'),
+    ('boxed', 'Boxed'),
+    ('ribbon', 'Ribbon'),
+    ('compact', 'Compact'),
+    ('gradient', 'Gradient'),
 ]
 
 

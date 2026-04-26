@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- COMPACT — Ultra-dense layout, small fonts, maximize content per page -->
+    <template id="sm_pro_template_compact">
+        <!-- Single-line header -->
+        <table style="width: 100%; margin-bottom: 8px; font-size: 10px;">
+            <tr>
+                <td style="width: 40px; vertical-align: middle;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 30px;"/>
+                </td>
+                <td style="vertical-align: middle; padding-left: 6px;">
+                    <strong class="sm-pro-company-name" style="font-size: 12px;"
+                            t-out="company.name"/>
+                    <span style="color: #999; margin-left: 8px;">
+                        <t t-if="company.street"><t t-out="company.street"/></t>
+                        <t t-if="company.phone"> · <t t-out="company.phone"/></t>
+                    </span>
+                </td>
+                <td style="text-align: right; vertical-align: middle;">
+                    <strong t-attf-style="font-size: 14px; color: #{style.theme_color or '#333'};">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </strong>
+                    <span t-if="doc_number" style="color: #888; margin-left: 6px; font-size: 11px;"
+                          t-out="doc_number"/>
+                </td>
+            </tr>
+        </table>
+        <hr t-attf-style="border: none; border-top: 1px solid #{style.theme_color or '#333'};
+                           margin: 0 0 8px 0;"/>
+
+        <!-- Compact two-column: partner left, info right -->
+        <table style="width: 100%; margin-bottom: 8px; font-size: 10px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    <span style="color: #999; text-transform: uppercase; font-size: 8px;">
+                        <t t-if="report_kind == 'purchase'">VENDOR</t><t t-else="">BILL TO</t>
+                    </span><br/>
+                    <strong t-out="partner.name"/>
+                    <t t-if="partner.street"><br/><span t-out="partner.street"/></t>
+                    <t t-if="partner.city"><br/><span t-out="partner.city"/>
+                        <t t-if="partner.state_id">, <span t-out="partner.state_id.name"/></t>
+                    </t>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    <table style="width: 100%; font-size: 10px;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #888; padding: 1px 4px;" t-out="row[0]"/>
+                            <td style="text-align: right; padding: 1px 4px;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+        <div t-if="narration" style="margin-top: 10px; font-size: 9px; color: #666; clear: both;">
+            <div t-out="narration"/>
+        </div>
+        <div style="margin-top: 20px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

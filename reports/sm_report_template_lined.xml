@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LINED — Clean lined-paper style, horizontal rules, minimal feel -->
+    <template id="sm_pro_template_lined">
+        <!-- Header with bottom line -->
+        <table style="width: 100%; margin-bottom: 6px;">
+            <tr>
+                <td style="vertical-align: middle;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 50px;"/>
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <strong class="sm-pro-company-name" style="font-size: 16px;"
+                            t-out="company.name"/>
+                    <div style="font-size: 10px; color: #888;">
+                        <t t-if="company.street"><span t-out="company.street"/></t>
+                        <t t-if="company.city"> · <span t-out="company.city"/></t>
+                        <t t-if="company.phone"> · <span t-out="company.phone"/></t>
+                    </div>
+                </td>
+                <td style="text-align: right; vertical-align: middle;">
+                    <div class="sm-pro-doc-title" style="font-size: 20px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr t-attf-style="border: none; border-top: 2px solid #{style.theme_color or '#546e7a'};
+                           margin: 0 0 14px 0;"/>
+
+        <!-- Info as dot leaders -->
+        <table style="width: 60%; margin-bottom: 14px; font-size: 12px;">
+            <tr t-foreach="info_rows" t-as="row">
+                <td style="width: 30%; color: #888;" t-out="row[0]"/>
+                <td style="border-bottom: 1px dotted #ccc; padding: 3px 0;" t-out="row[1]"/>
+            </tr>
+        </table>
+
+        <!-- Partner with left line -->
+        <div t-attf-style="border-left: 2px solid #{style.theme_color or '#546e7a'};
+                            padding-left: 12px; margin-bottom: 14px;">
+            <div style="font-size: 10px; text-transform: uppercase; color: #999; margin-bottom: 2px;">
+                <t t-if="report_kind == 'purchase'">Vendor</t><t t-else="">Customer</t>
+            </div>
+            <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+        </div>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+        <div t-if="narration" style="margin-top: 20px; padding: 8px; border-top: 1px dotted #ccc; clear: both;">
+            <div t-out="narration"/>
+        </div>
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

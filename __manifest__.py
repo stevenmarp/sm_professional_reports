@@ -2,7 +2,7 @@
 {
     'name': 'Professional Report Templates — Invoice, Sales, Purchase, Delivery',
     'version': '19.0.1.0.0',
-    'summary': '16 beautiful PDF templates for Invoices, Sales Orders, Purchase Orders '
+    'summary': '25 beautiful PDF templates for Invoices, Sales Orders, Purchase Orders '
                '& Delivery Slips. Theme colors, fonts, watermark PDF, last-page PDF, '
                'amount-in-words & per-partner styles.',
     'description': """
@@ -18,7 +18,7 @@ Replace the standard Odoo PDF reports with beautifully designed templates for:
 
 **Key Features**
 
-- 16 distinct ready-to-use templates: *Classic*, *Modern*, *Slim*, *Retro*, *Bold*, *Elegant*, *Corporate*, *Minimal*, *Accent*, *Executive*, *Striped*, *Formal*, *Rounded*, *Centered*, *Voucher*, *Grid*
+- 25 distinct ready-to-use templates: *Classic*, *Modern*, *Slim*, *Retro*, *Bold*, *Elegant*, *Corporate*, *Minimal*, *Accent*, *Executive*, *Striped*, *Formal*, *Rounded*, *Centered*, *Voucher*, *Grid*, *Banner*, *Sidebar*, *Contrast*, *Split*, *Lined*, *Boxed*, *Ribbon*, *Compact*, *Gradient*
 - Pick a theme color, font family, font size for header/body/footer
 - Per-company default style
 - Per-partner override (assign a specific style to a customer/supplier)
@@ -87,6 +87,15 @@ Replace the standard Odoo PDF reports with beautifully designed templates for:
         'reports/sm_report_template_centered.xml',
         'reports/sm_report_template_voucher.xml',
         'reports/sm_report_template_grid.xml',
+        'reports/sm_report_template_banner.xml',
+        'reports/sm_report_template_sidebar.xml',
+        'reports/sm_report_template_contrast.xml',
+        'reports/sm_report_template_split.xml',
+        'reports/sm_report_template_lined.xml',
+        'reports/sm_report_template_boxed.xml',
+        'reports/sm_report_template_ribbon.xml',
+        'reports/sm_report_template_compact.xml',
+        'reports/sm_report_template_gradient.xml',
         'reports/sm_invoice_report.xml',
         'reports/sm_sale_order_report.xml',
         'reports/sm_purchase_order_report.xml',
