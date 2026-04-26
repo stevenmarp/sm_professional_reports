@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_picking_form_sm_pro" model="ir.ui.view">
+        <field name="name">stock.picking.form.sm.pro</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sm_report_style_id"
+                       options="{'no_create': True}"
+                       placeholder="(use partner / company default)"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

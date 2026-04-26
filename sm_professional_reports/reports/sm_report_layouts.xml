@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- =========================================================
+         Shared building blocks used by every template (classic /
+         modern / slim) and every report (invoice / SO / PO / DO).
+
+         Context expected by every block:
+           - doc       : the record being printed
+           - style     : sm.report.style record (resolved upstream)
+           - report_kind : 'invoice' | 'sale' | 'purchase' | 'picking'
+           - lines, partner, currency : convenience values set by report
+         ========================================================= -->
+
+    <!-- Inline CSS injected once per page -->
+    <template id="sm_pro_style_css">
+        <style type="text/css">
+            .sm-pro-page {
+                color: <t t-out="style.text_color or '#333'"/>;
+                font-family: <t t-out="style.font_family or 'sans-serif'"/>;
+                font-size: <t t-out="(style.body_font_size or 11)"/>px;
+            }
+            .sm-pro-h-fs { font-size: <t t-out="(style.header_font_size or 12)"/>px; }
+            .sm-pro-f-fs { font-size: <t t-out="(style.footer_font_size or 9)"/>px; }
+            .sm-pro-theme-bg { background-color: <t t-out="style.theme_color or '#74495f'"/>; }
+            .sm-pro-theme-color { color: <t t-out="style.theme_color or '#74495f'"/>; }
+            .sm-pro-theme-text { color: <t t-out="style.theme_text_color or '#fff'"/>; }
+            .sm-pro-company-name { color: <t t-out="style.company_name_color or '#74495f'"/>; }
+            .sm-pro-partner-name { color: <t t-out="style.partner_name_color or '#74495f'"/>; }
+            .sm-pro-table { width: 100%; border-collapse: collapse; }
+            .sm-pro-table th, .sm-pro-table td { padding: 6px 8px; vertical-align: top; }
+            .sm-pro-table thead th {
+                background-color: <t t-out="style.theme_color or '#74495f'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                text-align: left;
+                font-weight: bold;
+            }
+            <t t-if="style.zebra_rows">
+                .sm-pro-table tbody tr:nth-child(odd) td {
+                    background-color: <t t-out="style.odd_row_color or '#fff'"/>;
+                }
+                .sm-pro-table tbody tr:nth-child(even) td {
+                    background-color: <t t-out="style.even_row_color or '#f6f0f3'"/>;
+                }
+            </t>
+            .sm-pro-totals { width: 320px; float: right; margin-top: 14px; }
+            .sm-pro-totals td { padding: 4px 8px; }
+            .sm-pro-totals tr.total {
+                background-color: <t t-out="style.theme_color or '#74495f'"/>;
+                color: <t t-out="style.theme_text_color or '#fff'"/>;
+                font-weight: bold;
+                font-size: <t t-out="(style.body_font_size or 11) + 1"/>px;
+            }
+            .sm-pro-footer-line {
+                border-top: 2px solid <t t-out="style.theme_color or '#74495f'"/>;
+                padding-top: 6px;
+                color: #666;
+            }
+            .sm-pro-doc-title {
+                color: <t t-out="style.theme_color or '#74495f'"/>;
+                font-size: 26px;
+                font-weight: bold;
+                margin: 0;
+            }
+            .sm-pro-info-table td { padding: 3px 6px; }
+            .sm-pro-aiw {
+                margin-top: 10px;
+                padding: 8px 12px;
+                background-color: <t t-out="style.even_row_color or '#f6f0f3'"/>;
+                border-left: 4px solid <t t-out="style.theme_color or '#74495f'"/>;
+                font-style: italic;
+            }
+        </style>
+    </template>
+
+    <!-- Document title text per report kind -->
+    <template id="sm_pro_doc_title">
+        <t t-if="report_kind == 'invoice'">
+            <t t-if="doc.move_type == 'out_invoice'">INVOICE</t>
+            <t t-elif="doc.move_type == 'out_refund'">CREDIT NOTE</t>
+            <t t-elif="doc.move_type == 'in_invoice'">VENDOR BILL</t>
+            <t t-elif="doc.move_type == 'in_refund'">VENDOR CREDIT NOTE</t>
+            <t t-else="">DOCUMENT</t>
+        </t>
+        <t t-elif="report_kind == 'sale'">
+            <t t-if="doc.state in ('draft','sent')">QUOTATION</t>
+            <t t-else="">SALES ORDER</t>
+        </t>
+        <t t-elif="report_kind == 'purchase'">
+            <t t-if="doc.state in ('draft','sent','to approve')">REQUEST FOR QUOTATION</t>
+            <t t-else="">PURCHASE ORDER</t>
+        </t>
+        <t t-elif="report_kind == 'picking'">DELIVERY SLIP</t>
+    </template>
+
+    <!-- Partner block (To / From) -->
+    <template id="sm_pro_partner_block">
+        <div t-if="partner">
+            <div class="sm-pro-partner-name" style="font-weight: bold; font-size: 14px;"
+                 t-out="partner.name"/>
+            <div t-if="partner.parent_id" t-out="partner.parent_id.name"/>
+            <div t-if="partner.street" t-out="partner.street"/>
+            <div t-if="partner.street2" t-out="partner.street2"/>
+            <div>
+                <t t-if="partner.city"><t t-out="partner.city"/></t>
+                <t t-if="partner.state_id">, <t t-out="partner.state_id.name"/></t>
+                <t t-if="partner.zip"> <t t-out="partner.zip"/></t>
+            </div>
+            <div t-if="partner.country_id" t-out="partner.country_id.name"/>
+            <div t-if="partner.vat">VAT: <t t-out="partner.vat"/></div>
+            <div t-if="partner.email" t-out="partner.email"/>
+            <div t-if="partner.phone" t-out="partner.phone"/>
+        </div>
+    </template>
+
+    <!-- Lines table -->
+    <template id="sm_pro_lines_table">
+        <table class="sm-pro-table">
+            <thead>
+                <tr>
+                    <th t-if="style.show_row_number" style="width: 30px;">#</th>
+                    <th t-if="style.show_product_image and report_kind in ('sale','invoice','purchase','picking')"
+                        style="width: 60px;">Image</th>
+                    <th>Description</th>
+                    <th style="width: 70px; text-align: right;">Qty</th>
+                    <th t-if="report_kind in ('sale','invoice','purchase')"
+                        style="width: 90px; text-align: right;">Unit Price</th>
+                    <th t-if="report_kind in ('sale','invoice','purchase')"
+                        style="width: 70px; text-align: right;">Disc%</th>
+                    <th t-if="report_kind in ('sale','invoice','purchase')"
+                        style="width: 110px; text-align: right;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="lines" t-as="line">
+                    <td t-if="style.show_row_number" t-out="line_index + 1"/>
+                    <td t-if="style.show_product_image and report_kind in ('sale','invoice','purchase','picking')">
+                        <t t-set="prod" t-value="line.product_id if 'product_id' in line._fields else False"/>
+                        <img t-if="prod and prod.image_128"
+                             t-att-src="image_data_uri(prod.image_128)"
+                             style="max-width: 50px; max-height: 50px;"/>
+                    </td>
+                    <td>
+                        <strong t-if="'product_id' in line._fields and line.product_id"
+                                t-out="line.product_id.display_name"/>
+                        <div t-if="'name' in line._fields" t-out="line.name"
+                             style="white-space: pre-line; color: #666;"/>
+                    </td>
+                    <td style="text-align: right;">
+                        <t t-if="report_kind == 'invoice'">
+                            <t t-out="'%.2f' % (line.quantity or 0)"/>
+                            <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                        </t>
+                        <t t-elif="report_kind == 'sale'">
+                            <t t-out="'%.2f' % (line.product_uom_qty or 0)"/>
+                            <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                        </t>
+                        <t t-elif="report_kind == 'purchase'">
+                            <t t-out="'%.2f' % (line.product_qty or 0)"/>
+                            <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                        </t>
+                        <t t-elif="report_kind == 'picking'">
+                            <t t-out="'%.2f' % (line.quantity or line.product_uom_qty or 0)"/>
+                            <t t-if="line.product_uom"> <t t-out="line.product_uom.name"/></t>
+                        </t>
+                    </td>
+                    <t t-if="report_kind in ('sale','invoice','purchase')">
+                        <td style="text-align: right;">
+                            <t t-set="price" t-value="line.price_unit if 'price_unit' in line._fields else 0"/>
+                            <span t-out="price"
+                                  t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                        </td>
+                        <td style="text-align: right;">
+                            <t t-out="('%.0f' % (line.discount or 0)) if 'discount' in line._fields else '0'"/>
+                        </td>
+                        <td style="text-align: right;">
+                            <t t-set="subtotal" t-value="line.price_subtotal if 'price_subtotal' in line._fields else 0"/>
+                            <span t-out="subtotal"
+                                  t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                        </td>
+                    </t>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <!-- Totals block -->
+    <template id="sm_pro_totals">
+        <table class="sm-pro-totals">
+            <tr>
+                <td>Subtotal</td>
+                <td style="text-align: right;">
+                    <span t-out="amount_untaxed or 0"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+            <tr t-if="amount_tax">
+                <td>Taxes</td>
+                <td style="text-align: right;">
+                    <span t-out="amount_tax"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+            <tr class="total">
+                <td>Total</td>
+                <td style="text-align: right;">
+                    <span t-out="amount_total or 0"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+        </table>
+        <div style="clear: both;"/>
+        <div t-if="style.amount_in_words and amount_total" class="sm-pro-aiw">
+            <strong>Amount in words:</strong>
+            <t t-out="style.get_amount_in_words(amount_total, currency)"/>
+        </div>
+    </template>
+
+    <!-- Footer block -->
+    <template id="sm_pro_footer_block">
+        <div class="sm-pro-footer-line sm-pro-f-fs">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 70%; vertical-align: top;">
+                        <strong t-out="company.name"/>
+                        <t t-if="company.street"> · <t t-out="company.street"/></t>
+                        <t t-if="company.city"> · <t t-out="company.city"/></t>
+                        <t t-if="company.country_id"> · <t t-out="company.country_id.name"/></t>
+                        <br/>
+                        <t t-if="company.phone">Tel: <t t-out="company.phone"/></t>
+                        <t t-if="company.email"> · Email: <t t-out="company.email"/></t>
+                        <t t-if="company.vat"> · VAT: <t t-out="company.vat"/></t>
+                        <div t-if="style.footer_tagline" style="font-style: italic; margin-top: 2px;">
+                            <t t-out="style.footer_tagline"/>
+                        </div>
+                        <div t-if="style.show_bank_in_footer and company.partner_id.bank_ids"
+                             style="margin-top: 4px;">
+                            <t t-foreach="company.partner_id.bank_ids[:2]" t-as="bank">
+                                <strong t-out="bank.bank_name or 'Bank'"/>:
+                                <t t-out="bank.acc_number"/><br/>
+                            </t>
+                        </div>
+                    </td>
+                    <td t-if="style.show_footer_logo and style.footer_logo"
+                        style="width: 30%; text-align: right;">
+                        <img t-att-src="image_data_uri(style.footer_logo)"
+                             style="max-height: 50px;"/>
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align: center; color: #999; margin-top: 4px;">
+                Page <span class="page"/> / <span class="topage"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- Dispatcher: pick classic / modern / slim based on style.template -->
+    <template id="sm_pro_dispatcher">
+        <t t-call="sm_professional_reports.sm_pro_style_css"/>
+        <div class="sm-pro-page">
+            <t t-if="style.template == 'modern'">
+                <t t-call="sm_professional_reports.sm_pro_template_modern"/>
+            </t>
+            <t t-elif="style.template == 'slim'">
+                <t t-call="sm_professional_reports.sm_pro_template_slim"/>
+            </t>
+            <t t-else="">
+                <t t-call="sm_professional_reports.sm_pro_template_classic"/>
+            </t>
+        </div>
+    </template>
+</odoo>
