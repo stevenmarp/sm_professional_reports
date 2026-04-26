@@ -3,6 +3,7 @@
     <data noupdate="1">
         <record id="style_classic_default" model="sm.report.style">
             <field name="name">Classic — Default</field>
+            <field name="active">True</field>
             <field name="template">classic</field>
             <field name="theme_color">#74495f</field>
             <field name="theme_text_color">#ffffff</field>
@@ -15,6 +16,7 @@
 
         <record id="style_modern_default" model="sm.report.style">
             <field name="name">Modern — Teal</field>
+            <field name="active">True</field>
             <field name="template">modern</field>
             <field name="theme_color">#1abc9c</field>
             <field name="company_name_color">#1abc9c</field>
@@ -24,6 +26,7 @@
 
         <record id="style_slim_default" model="sm.report.style">
             <field name="name">Slim — Mono</field>
+            <field name="active">True</field>
             <field name="template">slim</field>
             <field name="theme_color">#222222</field>
             <field name="company_name_color">#222222</field>
@@ -34,6 +37,7 @@
 
         <record id="style_retro_default" model="sm.report.style">
             <field name="name">Retro — Vintage</field>
+            <field name="active">True</field>
             <field name="template">retro</field>
             <field name="theme_color">#8b5e3c</field>
             <field name="company_name_color">#8b5e3c</field>
@@ -44,6 +48,7 @@
 
         <record id="style_bold_default" model="sm.report.style">
             <field name="name">Bold — Impact</field>
+            <field name="active">True</field>
             <field name="template">bold</field>
             <field name="theme_color">#e74c3c</field>
             <field name="theme_text_color">#ffffff</field>
@@ -54,6 +59,7 @@
 
         <record id="style_elegant_default" model="sm.report.style">
             <field name="name">Elegant — Rose</field>
+            <field name="active">True</field>
             <field name="template">elegant</field>
             <field name="theme_color">#9b59b6</field>
             <field name="company_name_color">#9b59b6</field>
@@ -64,6 +70,7 @@
 
         <record id="style_corporate_default" model="sm.report.style">
             <field name="name">Corporate — Blue</field>
+            <field name="active">True</field>
             <field name="template">corporate</field>
             <field name="theme_color">#2c3e50</field>
             <field name="company_name_color">#2c3e50</field>
@@ -73,6 +80,7 @@
 
         <record id="style_minimal_default" model="sm.report.style">
             <field name="name">Minimal — Light</field>
+            <field name="active">True</field>
             <field name="template">minimal</field>
             <field name="theme_color">#555555</field>
             <field name="company_name_color">#333333</field>
@@ -82,6 +90,7 @@
 
         <record id="style_accent_default" model="sm.report.style">
             <field name="name">Accent — Orange</field>
+            <field name="active">True</field>
             <field name="template">accent</field>
             <field name="theme_color">#e67e22</field>
             <field name="company_name_color">#e67e22</field>
@@ -91,6 +100,7 @@
 
         <record id="style_executive_default" model="sm.report.style">
             <field name="name">Executive — Gold</field>
+            <field name="active">True</field>
             <field name="template">executive</field>
             <field name="theme_color">#d4a843</field>
             <field name="company_name_color">#1a1a2e</field>
@@ -100,6 +110,7 @@
 
         <record id="style_striped_default" model="sm.report.style">
             <field name="name">Striped — Green</field>
+            <field name="active">True</field>
             <field name="template">striped</field>
             <field name="theme_color">#27ae60</field>
             <field name="theme_text_color">#ffffff</field>
@@ -107,5 +118,13 @@
             <field name="partner_name_color">#229954</field>
             <field name="even_row_color">#eafaf1</field>
         </record>
+    </data>
+
+    <!-- Force-activate all demo styles on upgrade (noupdate=0) -->
+    <data noupdate="0">
+        <function model="sm.report.style" name="write">
+            <value model="sm.report.style" search="[('id','!=',0)]"/>
+            <value eval="{'active': True}"/>
+        </function>
     </data>
 </odoo>
