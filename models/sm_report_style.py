@@ -226,18 +226,24 @@ class SmReportStyle(models.Model):
 
         # Document override
         if 'sm_report_style_id' in document._fields and document.sm_report_style_id:
-            return document.sm_report_style_id
+            style = document.sm_report_style_id
+            if style.active:
+                return style
 
         # Partner override
         partner = getattr(document, 'partner_id', False)
         if partner and 'sm_report_style_id' in partner._fields \
                 and partner.sm_report_style_id:
-            return partner.sm_report_style_id
+            style = partner.sm_report_style_id
+            if style.active:
+                return style
 
         # Company default
         company = getattr(document, 'company_id', False) or self.env.company
         if 'sm_report_style_id' in company._fields and company.sm_report_style_id:
-            return company.sm_report_style_id
+            style = company.sm_report_style_id
+            if style.active:
+                return style
 
         # Fallback: any active style
         return self.search([('active', '=', True)], limit=1)
