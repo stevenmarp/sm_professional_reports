@@ -29,6 +29,11 @@ TEMPLATE_SELECTION = [
     ('ribbon', 'Ribbon'),
     ('compact', 'Compact'),
     ('gradient', 'Gradient'),
+    ('letter', 'Letter'),
+    ('dashboard', 'Dashboard'),
+    ('catalog', 'Catalog'),
+    ('ledger', 'Ledger'),
+    ('ticket', 'Ticket'),
 ]
 
 

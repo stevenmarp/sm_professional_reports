@@ -775,6 +775,81 @@
                 padding: 5px 10px; font-size: 11px; border-radius: 4px;
                 border: 1px solid #764ba2;
             }
+
+            /* ── Letter ── */
+            .sm-tpl-letter .sm-pro-table thead th {
+                background: #37474f; color: #fff; padding: 7px 8px; font-size: 11px;
+                border: none;
+            }
+            .sm-tpl-letter .sm-pro-table tbody td {
+                padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #e0e0e0;
+            }
+            .sm-tpl-letter .sm-pro-table tbody tr:nth-child(even) td {
+                background: #eceff1;
+            }
+            .sm-tpl-letter .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #37474f;
+            }
+            .sm-tpl-letter .sm-pro-footer-line {
+                border-top: 1px solid #ccc;
+            }
+            .sm-tpl-letter .sm-pro-aiw {
+                border-left: 2px solid #37474f; padding: 5px 10px; font-size: 11px;
+                background: #fafafa;
+            }
+
+            /* ── Dashboard ── */
+            .sm-tpl-dashboard .sm-pro-table thead th {
+                background: #3f51b5; color: #fff; padding: 6px 8px; font-size: 10px;
+                border: none; text-transform: uppercase; letter-spacing: 0.5px;
+            }
+            .sm-tpl-dashboard .sm-pro-table tbody td {
+                padding: 5px 8px; font-size: 11px; border-bottom: 1px solid #e8eaf6;
+            }
+            .sm-tpl-dashboard .sm-pro-table tbody tr:nth-child(even) td {
+                background: #e8eaf6;
+            }
+            .sm-tpl-dashboard .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #3f51b5;
+            }
+            .sm-tpl-dashboard .sm-pro-footer-line {
+                border-top: 2px solid #3f51b5;
+            }
+            .sm-tpl-dashboard .sm-pro-aiw {
+                background: #e8eaf6; padding: 5px 10px; font-size: 11px;
+                border-radius: 4px;
+            }
+
+            /* ── Catalog ── */
+            .sm-tpl-catalog .sm-pro-totals tr.total {
+                font-weight: 700; border-top: 2px solid #e91e63;
+            }
+            .sm-tpl-catalog .sm-pro-footer-line {
+                border-top: 2px solid #e91e63;
+            }
+            .sm-tpl-catalog .sm-pro-aiw {
+                background: #fce4ec; padding: 5px 10px; font-size: 11px;
+                border-left: 4px solid #e91e63; border-radius: 0 4px 4px 0;
+            }
+
+            /* ── Ledger ── */
+            .sm-tpl-ledger .sm-pro-footer-line {
+                border-top: 3px double #2c3e50;
+            }
+            .sm-tpl-ledger .sm-pro-aiw {
+                border: 1px solid #2c3e50; padding: 5px 10px; font-size: 11px;
+                font-family: Georgia, 'Times New Roman', serif;
+                font-style: italic;
+            }
+
+            /* ── Ticket ── */
+            .sm-tpl-ticket .sm-pro-footer-line {
+                border-top: 1px dashed #333;
+            }
+            .sm-tpl-ticket .sm-pro-aiw {
+                text-align: center; font-size: 10px; font-style: italic;
+                color: #666; padding: 4px; background: none;
+            }
         </style>
     </template>
 
@@ -1034,6 +1109,21 @@
             </t>
             <t t-elif="style.template == 'gradient'">
                 <t t-call="sm_professional_reports.sm_pro_template_gradient"/>
+            </t>
+            <t t-elif="style.template == 'letter'">
+                <t t-call="sm_professional_reports.sm_pro_template_letter"/>
+            </t>
+            <t t-elif="style.template == 'dashboard'">
+                <t t-call="sm_professional_reports.sm_pro_template_dashboard"/>
+            </t>
+            <t t-elif="style.template == 'catalog'">
+                <t t-call="sm_professional_reports.sm_pro_template_catalog"/>
+            </t>
+            <t t-elif="style.template == 'ledger'">
+                <t t-call="sm_professional_reports.sm_pro_template_ledger"/>
+            </t>
+            <t t-elif="style.template == 'ticket'">
+                <t t-call="sm_professional_reports.sm_pro_template_ticket"/>
             </t>
             <t t-else="">
                 <t t-call="sm_professional_reports.sm_pro_template_classic"/>

@@ -263,6 +263,57 @@
             <field name="partner_name_color">#5e35b1</field>
             <field name="even_row_color">#ede7f6</field>
         </record>
+
+        <record id="style_letter_default" model="sm.report.style">
+            <field name="name">Letter — Charcoal</field>
+            <field name="active">True</field>
+            <field name="template">letter</field>
+            <field name="theme_color">#37474f</field>
+            <field name="company_name_color">#263238</field>
+            <field name="partner_name_color">#37474f</field>
+            <field name="even_row_color">#eceff1</field>
+        </record>
+
+        <record id="style_dashboard_default" model="sm.report.style">
+            <field name="name">Dashboard — Royal</field>
+            <field name="active">True</field>
+            <field name="template">dashboard</field>
+            <field name="theme_color">#3f51b5</field>
+            <field name="theme_text_color">#ffffff</field>
+            <field name="company_name_color">#283593</field>
+            <field name="partner_name_color">#1a237e</field>
+            <field name="even_row_color">#e8eaf6</field>
+        </record>
+
+        <record id="style_catalog_default" model="sm.report.style">
+            <field name="name">Catalog — Rose</field>
+            <field name="active">True</field>
+            <field name="template">catalog</field>
+            <field name="theme_color">#e91e63</field>
+            <field name="company_name_color">#c2185b</field>
+            <field name="partner_name_color">#880e4f</field>
+            <field name="even_row_color">#fce4ec</field>
+        </record>
+
+        <record id="style_ledger_default" model="sm.report.style">
+            <field name="name">Ledger — Classic</field>
+            <field name="active">True</field>
+            <field name="template">ledger</field>
+            <field name="theme_color">#2c3e50</field>
+            <field name="company_name_color">#1a252f</field>
+            <field name="partner_name_color">#2c3e50</field>
+            <field name="even_row_color">#f5f5f0</field>
+        </record>
+
+        <record id="style_ticket_default" model="sm.report.style">
+            <field name="name">Ticket — Mono</field>
+            <field name="active">True</field>
+            <field name="template">ticket</field>
+            <field name="theme_color">#333333</field>
+            <field name="company_name_color">#111111</field>
+            <field name="partner_name_color">#333333</field>
+            <field name="even_row_color">#f5f5f5</field>
+        </record>
     </data>
 
     <!-- Force-activate all demo styles on upgrade (noupdate=0) -->
@@ -340,6 +391,21 @@
             <field name="active" eval="True"/>
         </record>
         <record id="style_gradient_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_letter_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_dashboard_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_catalog_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_ledger_default" model="sm.report.style" forcecreate="1">
+            <field name="active" eval="True"/>
+        </record>
+        <record id="style_ticket_default" model="sm.report.style" forcecreate="1">
             <field name="active" eval="True"/>
         </record>
     </data>

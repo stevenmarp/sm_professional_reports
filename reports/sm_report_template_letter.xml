@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LETTER — Formal business letter format.
+         Company letterhead top-right, date right-aligned, partner as recipient
+         address left, greeting paragraph, items table, closing + signature.
+         Entirely different page flow from other templates. -->
+    <template id="sm_pro_template_letter">
+        <!-- Letterhead: logo + company address flush-right -->
+        <table style="width: 100%; margin-bottom: 30px;">
+            <tr>
+                <td style="width: 50%;"/>
+                <td style="width: 50%; text-align: right; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 50px; margin-bottom: 6px;"/>
+                    <div class="sm-pro-company-name" style="font-size: 14px; font-weight: bold;"
+                         t-out="company.name"/>
+                    <div style="font-size: 10px; color: #666; line-height: 1.5;">
+                        <t t-if="company.street"><t t-out="company.street"/><br/></t>
+                        <t t-if="company.city"><t t-out="company.city"/></t>
+                        <t t-if="company.state_id">, <t t-out="company.state_id.name"/></t>
+                        <t t-if="company.zip"> <t t-out="company.zip"/></t>
+                        <t t-if="company.country_id"><br/><t t-out="company.country_id.name"/></t>
+                        <t t-if="company.phone"><br/>Tel: <t t-out="company.phone"/></t>
+                        <t t-if="company.email"><br/><t t-out="company.email"/></t>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Date right-aligned -->
+        <div style="text-align: right; margin-bottom: 20px; font-size: 12px;">
+            <t t-foreach="info_rows" t-as="row">
+                <t t-if="row[0] == 'Date' and row[1]"><t t-out="row[1]"/></t>
+            </t>
+        </div>
+
+        <!-- Recipient address (like envelope) -->
+        <div style="margin-bottom: 25px;">
+            <div style="font-size: 10px; color: #999; text-transform: uppercase; margin-bottom: 4px;">To:</div>
+            <div t-if="partner" style="line-height: 1.6;">
+                <strong class="sm-pro-partner-name" style="font-size: 13px;"
+                        t-out="partner.name"/>
+                <div t-if="partner.street" t-out="partner.street"/>
+                <div t-if="partner.street2" t-out="partner.street2"/>
+                <div>
+                    <t t-if="partner.city"><t t-out="partner.city"/></t>
+                    <t t-if="partner.state_id">, <t t-out="partner.state_id.name"/></t>
+                    <t t-if="partner.zip"> <t t-out="partner.zip"/></t>
+                </div>
+                <div t-if="partner.country_id" t-out="partner.country_id.name"/>
+            </div>
+        </div>
+
+        <!-- Subject line -->
+        <div style="margin-bottom: 20px;">
+            <strong>RE: <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+            <t t-if="doc_number"> — <t t-out="doc_number"/></t></strong>
+        </div>
+
+        <!-- Greeting -->
+        <p style="margin-bottom: 15px;">
+            Dear <t t-out="partner.name if partner else 'Valued Customer'"/>,
+        </p>
+        <p style="margin-bottom: 20px;">
+            Please find below the details pertaining to the above-referenced document.
+            We kindly request your review at your earliest convenience.
+        </p>
+
+        <!-- Lines table (shared) -->
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+
+        <!-- Totals (shared) -->
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <!-- Payment / due info -->
+        <div style="clear: both; margin-top: 20px;">
+            <t t-foreach="info_rows" t-as="row">
+                <t t-if="row[0] == 'Due Date' and row[1]">
+                    <p>Payment is due by <strong><t t-out="row[1]"/></strong>.</p>
+                </t>
+            </t>
+        </div>
+
+        <!-- Narration as terms -->
+        <div t-if="narration" style="margin-top: 10px; padding: 10px;
+                    border-left: 2px solid #ccc; color: #555; font-size: 10px;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Closing -->
+        <p style="margin-top: 25px;">
+            Thank you for your continued trust and business.
+        </p>
+        <p style="margin-top: 8px;">
+            Sincerely,
+        </p>
+
+        <!-- Signature area -->
+        <div style="margin-top: 40px;">
+            <div t-attf-style="border-bottom: 1px solid #{style.theme_color or '#333'}; width: 200px;"/>
+            <div style="margin-top: 4px; font-size: 11px;">
+                <strong t-out="company.name"/>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

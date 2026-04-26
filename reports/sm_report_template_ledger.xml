@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LEDGER — Accounting journal / ledger style.
+         Serif typography, centered company header, double-ruled
+         borders, ruling-line aesthetic. Heavy top/bottom rules,
+         formal numbering. Very different visual feel. -->
+    <template id="sm_pro_template_ledger">
+        <!-- Centered company header with double rules -->
+        <div style="text-align: center; margin-bottom: 6px;">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                 style="max-height: 50px; margin-bottom: 4px;"/>
+            <div class="sm-pro-company-name"
+                 style="font-size: 20px; font-weight: bold; font-family: Georgia, 'Times New Roman', serif;"
+                 t-out="company.name"/>
+            <div style="font-size: 10px; color: #555; font-family: Georgia, 'Times New Roman', serif;">
+                <t t-if="company.street"><t t-out="company.street"/></t>
+                <t t-if="company.city"> · <t t-out="company.city"/></t>
+                <t t-if="company.country_id"> · <t t-out="company.country_id.name"/></t>
+                <t t-if="company.phone"> · Tel: <t t-out="company.phone"/></t>
+            </div>
+        </div>
+
+        <!-- Double rule -->
+        <div t-attf-style="border-top: 3px double #{style.theme_color or '#2c3e50'};
+                           border-bottom: 1px solid #{style.theme_color or '#2c3e50'};
+                           height: 4px; margin-bottom: 14px;"/>
+
+        <!-- Document title centered -->
+        <div style="text-align: center; margin-bottom: 14px; font-family: Georgia, 'Times New Roman', serif;">
+            <h2 class="sm-pro-doc-title" style="font-size: 20px; letter-spacing: 3px; margin: 0;">
+                <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+            </h2>
+            <div style="font-size: 12px; color: #666;" t-out="doc_number"/>
+        </div>
+
+        <!-- Ledger info rows (key: value in centered pairs) -->
+        <table style="width: 70%; margin: 0 auto 16px auto;
+                      font-family: Georgia, 'Times New Roman', serif; font-size: 11px;">
+            <tr t-foreach="info_rows" t-as="row">
+                <td style="width: 40%; text-align: right; padding: 3px 10px;
+                           color: #777; font-style: italic;" t-out="row[0]"/>
+                <td style="width: 5%; text-align: center;">:</td>
+                <td style="padding: 3px 10px; font-weight: bold;" t-out="row[1]"/>
+            </tr>
+        </table>
+
+        <!-- Single rule separator -->
+        <div t-attf-style="border-top: 1px solid #{style.theme_color or '#2c3e50'}; margin-bottom: 12px;"/>
+
+        <!-- Partner block in serif style -->
+        <div style="margin-bottom: 16px; font-family: Georgia, 'Times New Roman', serif;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        <div style="font-size: 10px; text-transform: uppercase; color: #999;
+                                    letter-spacing: 2px; margin-bottom: 4px; font-family: sans-serif;">
+                            <t t-if="report_kind == 'purchase'">Vendor</t>
+                            <t t-else="">Bill To</t>
+                        </div>
+                        <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top; text-align: right;">
+                        <div style="font-size: 10px; text-transform: uppercase; color: #999;
+                                    letter-spacing: 2px; margin-bottom: 4px; font-family: sans-serif;">
+                            Company
+                        </div>
+                        <div style="font-weight: bold;" t-out="company.name"/>
+                        <div t-if="company.vat" style="font-size: 10px;">VAT: <t t-out="company.vat"/></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CUSTOM LINES TABLE — Ledger/journal style with heavy ruling -->
+        <table class="sm-pro-table sm-ledger-table"
+               t-attf-style="border-top: 3px double #{style.theme_color or '#2c3e50'};
+                              border-bottom: 3px double #{style.theme_color or '#2c3e50'};
+                              font-family: Georgia, 'Times New Roman', serif;">
+            <thead>
+                <tr t-attf-style="border-bottom: 2px solid #{style.theme_color or '#2c3e50'};">
+                    <th style="width: 30px; text-align: center; padding: 6px 4px; font-size: 10px;
+                               font-style: italic;">No.</th>
+                    <th style="padding: 6px 8px; font-size: 10px; font-style: italic;">Particulars</th>
+                    <th style="width: 80px; text-align: right; padding: 6px 8px; font-size: 10px;
+                               font-style: italic;">Qty</th>
+                    <th t-if="report_kind in ('sale','invoice','purchase')"
+                        style="width: 100px; text-align: right; padding: 6px 8px; font-size: 10px;
+                               font-style: italic;">Rate</th>
+                    <th t-if="report_kind in ('sale','invoice','purchase')"
+                        style="width: 110px; text-align: right; padding: 6px 8px; font-size: 10px;
+                               font-style: italic;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="lines" t-as="line"
+                    t-attf-style="border-bottom: 1px solid #{style.theme_color or '#2c3e50'}40;">
+                    <td style="text-align: center; padding: 5px 4px; font-size: 10px; color: #999;"
+                        t-out="line_index + 1"/>
+                    <td style="padding: 5px 8px; font-size: 11px;">
+                        <span t-if="'product_id' in line._fields and line.product_id"
+                              style="font-weight: bold;"
+                              t-out="line.product_id.display_name"/>
+                        <div t-if="'name' in line._fields and line.name"
+                             style="font-size: 10px; color: #666; font-style: italic;
+                                    white-space: pre-line;"
+                             t-out="line.name"/>
+                    </td>
+                    <td style="text-align: right; padding: 5px 8px; font-size: 11px;">
+                        <t t-if="report_kind == 'invoice'">
+                            <t t-out="'%.2f' % (line.quantity or 0)"/>
+                        </t>
+                        <t t-elif="report_kind == 'sale'">
+                            <t t-out="'%.2f' % (line.product_uom_qty or 0)"/>
+                        </t>
+                        <t t-elif="report_kind == 'purchase'">
+                            <t t-out="'%.2f' % (line.product_qty or 0)"/>
+                        </t>
+                        <t t-elif="report_kind == 'picking'">
+                            <t t-out="'%.2f' % (line.quantity or line.product_uom_qty or 0)"/>
+                        </t>
+                    </td>
+                    <t t-if="report_kind in ('sale','invoice','purchase')">
+                        <td style="text-align: right; padding: 5px 8px; font-size: 11px;">
+                            <span t-out="line.price_unit if 'price_unit' in line._fields else 0"
+                                  t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                        </td>
+                        <td style="text-align: right; padding: 5px 8px; font-size: 11px; font-weight: bold;">
+                            <span t-out="line.price_subtotal if 'price_subtotal' in line._fields else 0"
+                                  t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                        </td>
+                    </t>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Totals with double underline -->
+        <table style="width: 280px; float: right; margin-top: 10px;
+                      font-family: Georgia, 'Times New Roman', serif;">
+            <tr>
+                <td style="padding: 4px 8px; font-style: italic;">Subtotal</td>
+                <td style="text-align: right; padding: 4px 8px;">
+                    <span t-out="amount_untaxed or 0"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+            <tr t-if="amount_tax">
+                <td style="padding: 4px 8px; font-style: italic;">Taxes</td>
+                <td style="text-align: right; padding: 4px 8px;">
+                    <span t-out="amount_tax"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+            <tr t-attf-style="border-top: 2px solid #{style.theme_color or '#2c3e50'};
+                              border-bottom: 3px double #{style.theme_color or '#2c3e50'};">
+                <td style="padding: 6px 8px; font-weight: bold; font-size: 13px;">Total</td>
+                <td style="text-align: right; padding: 6px 8px; font-weight: bold; font-size: 13px;">
+                    <span t-out="amount_total or 0"
+                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                </td>
+            </tr>
+        </table>
+        <div style="clear: both;"/>
+
+        <!-- Amount in words -->
+        <div t-if="style.amount_in_words and amount_total" class="sm-pro-aiw"
+             style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; margin-top: 10px;">
+            <strong>Amount in words:</strong>
+            <t t-out="style.get_amount_in_words(amount_total, currency)"/>
+        </div>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 10px;
+                    border: 1px solid #ddd; font-size: 10px;
+                    font-family: Georgia, 'Times New Roman', serif; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>
