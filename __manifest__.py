@@ -11,25 +11,59 @@ Professional Report Templates for Odoo 19
 
 Replace the standard Odoo PDF reports with beautifully designed templates for:
 
-- **Invoices** (account.move)
+- **Invoices & Credit Notes** (account.move)
 - **Sales Orders & Quotations** (sale.order)
 - **Purchase Orders & RFQs** (purchase.order)
 - **Delivery Slips** (stock.picking)
 
-**Key Features**
+**30 Templates — Including 5 Structurally Unique Layouts**
 
 - 30 distinct ready-to-use templates: *Classic*, *Modern*, *Slim*, *Retro*, *Bold*, *Elegant*, *Corporate*, *Minimal*, *Accent*, *Executive*, *Striped*, *Formal*, *Rounded*, *Centered*, *Voucher*, *Grid*, *Banner*, *Sidebar*, *Contrast*, *Split*, *Lined*, *Boxed*, *Ribbon*, *Compact*, *Gradient*, *Letter*, *Dashboard*, *Catalog*, *Ledger*, *Ticket*
-- Pick a theme color, font family, font size for header/body/footer
+- **Letter** — formal business letter with greeting, closing & signature block
+- **Dashboard** — KPI summary stat cards at top, compact table below
+- **Catalog** — card-based line items (no traditional table rows)
+- **Ledger** — accounting journal style, serif font, double-ruled borders
+- **Ticket** — receipt / kuitansi style with dashed tear lines & dot-leader totals
+
+**Style & Branding**
+
+- Theme color, text color, company & partner name colors
+- Font family (8 choices), header / body / footer font sizes
+- Zebra-stripe alternate row coloring with custom even-row color
+- Optional product image column in line tables
+- Optional row numbers
+- Prepared-by & Authorized-by signature blocks
+
+**Amount in Words — 13 Languages**
+
+- English, French, German, Spanish, Italian, Portuguese (BR), Russian, Polish, Norwegian, Lithuanian, Latvian, Indian English, Indonesian
+- Powered by `num2words`
+
+**Watermark & Last-Page PDF**
+
+- Upload a letterhead PDF as background watermark on every page
+- Dynamic watermark text with placeholders (date, partner, document number...)
+- Append a "last page" PDF automatically (terms & conditions, brochure...)
+
+**Multi-Level Style Priority**
+
 - Per-company default style
 - Per-partner override (assign a specific style to a customer/supplier)
 - Per-document override (set a style on a single invoice/order)
-- Alternate row coloring (zebra stripes) for line tables
-- Optional product image column
-- Optional amount-in-words (13 languages via num2words)
-- Watermark PDF (background letterhead) + dynamic watermark text
-- Append a "last page" PDF (terms & conditions, brochure...) automatically
-- Custom footer with bank details, VAT, tagline & small logo
+- Cascade: document > partner > company
+
+**Footer Customization**
+
+- Custom footer tagline text
+- Bank account details (auto from company bank accounts)
+- VAT number display
+- Optional small footer logo
+
+**Technical**
+
+- Works with Odoo 19 Community & Enterprise
 - Clean, well-documented codebase — easy to add your own templates
+- Shared building blocks for consistent look across all report types
     """,
     'author': 'Steven Marp',
     'website': 'https://apps.odoo.com/apps/browse?repo_maintainer_id=512936',
@@ -108,7 +142,7 @@ Replace the standard Odoo PDF reports with beautifully designed templates for:
     ],
 
     'images': ['static/description/banner.gif'],
-    'price': 644.48,
+    'price': 104.48,
     'currency': 'USD',
     'installable': True,
     'application': False,
