@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- GRID — Based on asri_dev Tenancy Instruction "Branded Grid" layout
+         Large logo left + letter-spaced brand right, centered company,
+         underlined title, bordered grid form with label:value rows. -->
+    <template id="sm_pro_template_grid">
+        <!-- Branded header: logo left, brand-name right letter-spaced -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 0;">
+            <tr>
+                <td style="width: 40%; vertical-align: middle;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 60px;"/>
+                </td>
+                <td style="width: 60%; text-align: right; vertical-align: middle;">
+                    <span class="sm-pro-company-name"
+                          t-attf-style="font-size: 22px; font-weight: 700;
+                                        letter-spacing: 0.3em; white-space: nowrap;
+                                        color: #{style.theme_color or '#333'};"
+                          t-out="company.name"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 4px;">
+                    <div style="font-size: 11px; color: #666;">
+                        <t t-if="company.street"><span t-out="company.street"/></t>
+                        <t t-if="company.city"> — <span t-out="company.city"/>
+                            <t t-if="company.state_id">, <span t-out="company.state_id.name"/></t>
+                        </t>
+                        <t t-if="company.phone"> | Tel: <span t-out="company.phone"/></t>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Gray HR -->
+        <div style="height: 1px; background: #ccc; margin: 6px 0 14px 0;"/>
+
+        <!-- Centered underlined title -->
+        <h2 t-attf-style="text-align: center; text-decoration: underline; font-size: 20px;
+                           margin: 0 0 14px 0; color: #{style.theme_color or '#333'};">
+            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+        </h2>
+
+        <!-- Metadata as bordered grid form -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+            <tr t-foreach="info_rows" t-as="row">
+                <td style="border: 1px solid #444; padding: 5px 8px; width: 25%;
+                           font-weight: bold; font-size: 11px; background: #f8f8f8;"
+                    t-out="row[0]"/>
+                <td style="border: 1px solid #444; padding: 5px 8px; font-size: 11px;"
+                    t-out="row[1]"/>
+            </tr>
+        </table>
+
+        <!-- Partner in grid -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+            <tr>
+                <td style="border: 1px solid #444; padding: 5px 8px; width: 25%;
+                           font-weight: bold; font-size: 11px; background: #f8f8f8;">
+                    <t t-if="report_kind == 'purchase'">Vendor</t>
+                    <t t-else="">Customer</t>
+                </td>
+                <td style="border: 1px solid #444; padding: 5px 8px; font-size: 11px;">
+                    <strong t-out="partner.name"/>
+                    <t t-if="partner.street"> — <span t-out="partner.street"/></t>
+                    <t t-if="partner.city">, <span t-out="partner.city"/></t>
+                    <t t-if="partner.phone"> | <span t-out="partner.phone"/></t>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 8px; clear: both;
+                    border: 1px solid #ddd; font-size: 11px;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- Multi-role signature bar -->
+        <table style="width: 100%; margin-top: 30px; font-size: 10px;">
+            <tr>
+                <td style="width: 33%; text-align: center;">
+                    <div style="font-weight: bold;">Issued By</div>
+                    <div style="height: 55px;"/>
+                    <div style="border-top: 1px solid #444; width: 70%; margin: 0 auto;">
+                        _______________
+                    </div>
+                </td>
+                <td style="width: 34%; text-align: center;">
+                    <div style="font-weight: bold;">Acknowledged</div>
+                    <div style="height: 55px;"/>
+                    <div style="border-top: 1px solid #444; width: 70%; margin: 0 auto;">
+                        _______________
+                    </div>
+                </td>
+                <td style="width: 33%; text-align: center;">
+                    <div style="font-weight: bold;">Approved</div>
+                    <div style="height: 55px;"/>
+                    <div style="border-top: 1px solid #444; width: 70%; margin: 0 auto;">
+                        _______________
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

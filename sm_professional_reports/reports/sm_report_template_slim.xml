@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================
+         SLIM TEMPLATE
+         Minimal mono-style: thin lines, no boxes.
+         ============================================ -->
+    <template id="sm_pro_template_slim">
+        <table style="width: 100%; border-bottom: 1px solid #ddd;
+                      padding-bottom: 8px; margin-bottom: 14px;">
+            <tr>
+                <td style="vertical-align: middle;">
+                    <span class="sm-pro-company-name"
+                          style="font-size: 18px; font-weight: bold;"
+                          t-out="company.name"/>
+                </td>
+                <td style="text-align: right; vertical-align: middle;
+                           text-transform: uppercase; letter-spacing: 3px;
+                           font-size: 14px;">
+                    <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    <t t-if="doc_number"> &#8211; <t t-out="doc_number"/></t>
+                </td>
+            </tr>
+        </table>
+
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 55%; vertical-align: top;">
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="vertical-align: top;">
+                    <table class="sm-pro-info-table" style="width: 100%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #888;" t-out="row[0]"/>
+                            <td style="text-align: right;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 24px; clear: both;
+                                     border-top: 1px dashed #ccc;
+                                     padding-top: 8px; color: #666;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 24px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

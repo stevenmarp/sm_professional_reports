@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_sm_pro" model="ir.ui.view">
+        <field name="name">sale.order.form.sm.pro</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="sm_report_style_id"
+                       options="{'no_create': True}"
+                       placeholder="(use partner / company default)"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

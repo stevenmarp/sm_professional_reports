@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_move_form_sm_pro" model="ir.ui.view">
+        <field name="name">account.move.form.sm.pro</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='narration']" position="before">
+                <group>
+                    <field name="sm_report_style_id"
+                           options="{'no_create': True}"
+                           placeholder="(use partner / company default)"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

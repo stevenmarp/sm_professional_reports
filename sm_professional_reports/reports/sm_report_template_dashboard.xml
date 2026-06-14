@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- DASHBOARD — KPI summary cards at top, compact body below.
+         4 stat cards in a row (Doc#, Date, Customer, Total),
+         then partner + info side by side, then lines table,
+         then totals inside a colored panel. -->
+    <template id="sm_pro_template_dashboard">
+        <!-- Company bar -->
+        <div t-attf-style="background: #{style.theme_color or '#3f51b5'}; color: #{style.theme_text_color or '#fff'};
+                           padding: 8px 14px; display: flex; align-items: center; margin-bottom: 14px;">
+            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                 style="max-height: 30px; margin-right: 10px;"/>
+            <span style="font-size: 15px; font-weight: bold;" t-out="company.name"/>
+        </div>
+
+        <!-- 4 KPI stat cards -->
+        <table style="width: 100%; margin-bottom: 16px; border-spacing: 8px; border-collapse: separate;">
+            <tr>
+                <!-- Card 1: Document Type -->
+                <td class="sm-dash-card" t-attf-style="width: 25%; background: #{style.theme_color or '#3f51b5'}11;
+                    border-left: 4px solid #{style.theme_color or '#3f51b5'}; padding: 10px; vertical-align: top;">
+                    <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #999;">
+                        Document
+                    </div>
+                    <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </div>
+                </td>
+                <!-- Card 2: Number -->
+                <td class="sm-dash-card" style="width: 25%; background: #f5f5f5;
+                    border-left: 4px solid #ff9800; padding: 10px; vertical-align: top;">
+                    <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #999;">
+                        Number
+                    </div>
+                    <div style="font-size: 14px; font-weight: bold; margin-top: 2px;"
+                         t-out="doc_number or '—'"/>
+                </td>
+                <!-- Card 3: Date -->
+                <td class="sm-dash-card" style="width: 25%; background: #f5f5f5;
+                    border-left: 4px solid #4caf50; padding: 10px; vertical-align: top;">
+                    <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #999;">
+                        Date
+                    </div>
+                    <div style="font-size: 14px; font-weight: bold; margin-top: 2px;">
+                        <t t-foreach="info_rows" t-as="row">
+                            <t t-if="row[0] == 'Date'"><t t-out="row[1] or '—'"/></t>
+                        </t>
+                    </div>
+                </td>
+                <!-- Card 4: Total -->
+                <td class="sm-dash-card" t-attf-style="width: 25%; background: #{style.theme_color or '#3f51b5'};
+                    color: #{style.theme_text_color or '#fff'}; padding: 10px; vertical-align: top;">
+                    <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">
+                        Total
+                    </div>
+                    <div style="font-size: 18px; font-weight: bold; margin-top: 2px;">
+                        <span t-out="amount_total or 0"
+                              t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Partner + extra info side by side -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; padding: 8px;
+                           background: #fafafa; border-radius: 4px;">
+                    <div style="font-size: 10px; text-transform: uppercase; color: #999;
+                                letter-spacing: 1px; margin-bottom: 4px;">
+                        <t t-if="report_kind == 'purchase'">Vendor</t>
+                        <t t-else="">Customer</t>
+                    </div>
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="width: 5%;"/>
+                <td style="vertical-align: top; padding: 8px;
+                           background: #fafafa; border-radius: 4px;">
+                    <div style="font-size: 10px; text-transform: uppercase; color: #999;
+                                letter-spacing: 1px; margin-bottom: 4px;">Details</div>
+                    <table style="width: 100%; font-size: 11px;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #777; padding: 2px 6px;" t-out="row[0]"/>
+                            <td style="padding: 2px 6px; font-weight: 600;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Lines table -->
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+
+        <!-- Totals in a panel -->
+        <div t-attf-style="background: #{style.theme_color or '#3f51b5'}08; border: 1px solid #{style.theme_color or '#3f51b5'}33;
+                           border-radius: 6px; padding: 10px; margin-top: 10px;">
+            <t t-call="sm_professional_reports.sm_pro_totals"/>
+        </div>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 10px;
+                    background: #fafafa; border-radius: 4px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

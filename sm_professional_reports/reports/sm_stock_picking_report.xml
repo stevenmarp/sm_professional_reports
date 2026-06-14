@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_picking_document">
+        <t t-set="style"
+           t-value="env['sm.report.style'].get_style_for(doc) or env['sm.report.style'].search([('active','=',True)], limit=1)"/>
+        <t t-set="company" t-value="doc.company_id or env.company"/>
+        <t t-set="partner" t-value="doc.partner_id"/>
+        <t t-set="currency" t-value="company.currency_id"/>
+        <t t-set="lines" t-value="doc.move_ids"/>
+        <t t-set="amount_untaxed" t-value="0"/>
+        <t t-set="amount_tax" t-value="0"/>
+        <t t-set="amount_total" t-value="0"/>
+        <t t-set="narration" t-value="doc.note if 'note' in doc._fields else ''"/>
+        <t t-set="report_kind" t-value="'picking'"/>
+        <t t-set="doc_number" t-value="doc.name"/>
+        <t t-set="info_rows" t-value="[
+            ('Number', doc.name or '/'),
+            ('Source', doc.origin or ''),
+            ('Scheduled', doc.scheduled_date and doc.scheduled_date.strftime('%Y-%m-%d') or ''),
+            ('Status', dict(doc._fields['state'].selection).get(doc.state, '')),
+            ('Operation', doc.picking_type_id.name or ''),
+        ]"/>
+
+        <div class="page">
+            <t t-call="sm_professional_reports.sm_pro_dispatcher"/>
+        </div>
+    </template>
+
+    <template id="report_picking">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sm_professional_reports.report_picking_document" t-lang="doc.partner_id.lang or env.user.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_sm_picking" model="ir.actions.report">
+        <field name="name">Professional Delivery Slip</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sm_professional_reports.report_picking</field>
+        <field name="report_file">sm_professional_reports.report_picking</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_sm_pro_a4"/>
+        <field name="print_report_name">'Delivery - %s' % (object.name or '').replace('/', '_')</field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_sm_pro_root"
+              name="Professional Reports"
+              parent="base.menu_administration"
+              sequence="90"/>
+
+    <menuitem id="menu_sm_pro_styles"
+              name="Report Styles"
+              parent="menu_sm_pro_root"
+              action="action_sm_report_style"
+              sequence="10"/>
+</odoo>
