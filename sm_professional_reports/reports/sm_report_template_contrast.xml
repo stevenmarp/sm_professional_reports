@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CONTRAST — Dark header panel, light body, inverted look -->
+    <template id="sm_pro_template_contrast">
+        <!-- Dark header panel -->
+        <div style="background: #1a1a2e; color: #e0e0e0; padding: 16px; margin-bottom: 14px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 60%; vertical-align: top;">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 50px; filter: brightness(0) invert(1);"/>
+                        <div style="font-size: 10px; margin-top: 4px; color: #999;">
+                            <t t-if="company.street"><span t-out="company.street"/></t>
+                            <t t-if="company.city"> · <span t-out="company.city"/></t>
+                            <t t-if="company.phone"> · <span t-out="company.phone"/></t>
+                        </div>
+                    </td>
+                    <td style="width: 40%; text-align: right; vertical-align: top;">
+                        <div t-attf-style="font-size: 24px; font-weight: bold;
+                                            color: #{style.theme_color or '#ff6f61'};">
+                            <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                        </div>
+                        <div t-if="doc_number" style="font-size: 13px; color: #aaa;"
+                             t-out="doc_number"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Light body -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 55%; vertical-align: top;">
+                    <div style="font-size: 10px; text-transform: uppercase; color: #999; margin-bottom: 4px;">
+                        <t t-if="report_kind == 'purchase'">Vendor</t><t t-else="">Bill To</t>
+                    </div>
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="width: 45%; vertical-align: top;">
+                    <table class="sm-pro-info-table" style="width: 100%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #999; font-size: 10px; text-transform: uppercase;"
+                                t-out="row[0]"/>
+                            <td style="text-align: right; font-weight: bold;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+        <div t-if="narration" style="margin-top: 20px; padding: 8px; clear: both;"><div t-out="narration"/></div>
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

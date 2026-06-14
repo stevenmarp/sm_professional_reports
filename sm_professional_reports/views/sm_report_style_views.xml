@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sm_report_style_form" model="ir.ui.view">
+        <field name="name">sm.report.style.form</field>
+        <field name="model">sm.report.style</field>
+        <field name="arch" type="xml">
+            <form string="Professional Report Style">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Style Name"/>
+                        <h1><field name="name" placeholder="e.g. Modern Teal"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template"/>
+                            <field name="font_family"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="header_font_size"/>
+                            <field name="body_font_size"/>
+                            <field name="footer_font_size"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Colors" name="colors">
+                            <group>
+                                <group string="Theme">
+                                    <field name="theme_color" widget="color"/>
+                                    <field name="theme_text_color" widget="color"/>
+                                </group>
+                                <group string="Text">
+                                    <field name="text_color" widget="color"/>
+                                    <field name="company_name_color" widget="color"/>
+                                    <field name="partner_name_color" widget="color"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Lines Table" name="lines">
+                            <group>
+                                <group>
+                                    <field name="zebra_rows"/>
+                                    <field name="odd_row_color" widget="color"
+                                           invisible="not zebra_rows"/>
+                                    <field name="even_row_color" widget="color"
+                                           invisible="not zebra_rows"/>
+                                </group>
+                                <group>
+                                    <field name="show_row_number"/>
+                                    <field name="show_product_image"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Amount In Words" name="aiw">
+                            <group>
+                                <field name="amount_in_words"/>
+                                <field name="amount_in_words_lang"
+                                       invisible="not amount_in_words"
+                                       required="amount_in_words"/>
+                            </group>
+                        </page>
+
+                        <page string="Watermark / Letterhead" name="watermark">
+                            <group>
+                                <group string="Background PDF">
+                                    <field name="watermark_pdf"
+                                           filename="watermark_pdf_filename"/>
+                                    <field name="watermark_pdf_filename" invisible="1"/>
+                                </group>
+                                <group string="Watermark Text (overlay)">
+                                    <field name="watermark_text"
+                                           placeholder="e.g. CONFIDENTIAL — {document}"/>
+                                    <field name="watermark_text_color" widget="color"
+                                           invisible="not watermark_text"/>
+                                    <field name="watermark_text_size"
+                                           invisible="not watermark_text"/>
+                                </group>
+                            </group>
+                            <p class="text-muted">
+                                Available text placeholders:
+                                <code>{date}</code>, <code>{time}</code>,
+                                <code>{company}</code>, <code>{user}</code>,
+                                <code>{partner}</code>, <code>{document}</code>.
+                            </p>
+                        </page>
+
+                        <page string="Last Page PDF" name="last_page">
+                            <group>
+                                <field name="last_page_pdf"
+                                       filename="last_page_pdf_filename"/>
+                                <field name="last_page_pdf_filename" invisible="1"/>
+                            </group>
+                            <p class="text-muted">
+                                The pages of this PDF will be appended at the end of every
+                                report using this style. Useful for terms &amp; conditions,
+                                brochures or marketing material.
+                            </p>
+                        </page>
+
+                        <page string="Footer" name="footer">
+                            <group>
+                                <group>
+                                    <field name="show_footer_logo"/>
+                                    <field name="footer_logo" widget="image"
+                                           invisible="not show_footer_logo"/>
+                                </group>
+                                <group>
+                                    <field name="footer_tagline"/>
+                                    <field name="show_bank_in_footer"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sm_report_style_list" model="ir.ui.view">
+        <field name="name">sm.report.style.list</field>
+        <field name="model">sm.report.style</field>
+        <field name="arch" type="xml">
+            <list string="Professional Report Styles">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="template"/>
+                <field name="theme_color" widget="color"/>
+                <field name="font_family"/>
+                <field name="amount_in_words"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sm_report_style_search" model="ir.ui.view">
+        <field name="name">sm.report.style.search</field>
+        <field name="model">sm.report.style</field>
+        <field name="arch" type="xml">
+            <search string="Styles">
+                <field name="name"/>
+                <field name="template"/>
+                <separator/>
+                <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="filter_inactive" string="Archived" domain="[('active','=',False)]"/>
+                <group>
+                    <filter name="group_template" string="Template"
+                            context="{'group_by': 'template'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sm_report_style" model="ir.actions.act_window">
+        <field name="name">Report Styles</field>
+        <field name="res_model">sm.report.style</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sm_report_style_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first professional report style
+            </p>
+            <p>
+                Pick a template, theme color and font, then assign the style to your
+                company, a partner or directly to a single document.
+            </p>
+        </field>
+    </record>
+</odoo>

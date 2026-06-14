@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Per-document body -->
+    <template id="report_invoice_document">
+        <t t-set="style"
+           t-value="env['sm.report.style'].get_style_for(doc) or env['sm.report.style'].search([('active','=',True)], limit=1)"/>
+        <t t-if="not style">
+            <t t-set="style" t-value="env['sm.report.style'].new({
+                'name': 'fallback', 'template': 'classic',
+            })"/>
+        </t>
+
+        <t t-set="company" t-value="doc.company_id or env.company"/>
+        <t t-set="partner" t-value="doc.partner_id"/>
+        <t t-set="currency" t-value="doc.currency_id or company.currency_id"/>
+        <t t-set="lines" t-value="doc.invoice_line_ids.filtered(lambda l: l.display_type in (False, 'product'))"/>
+        <t t-set="amount_untaxed" t-value="doc.amount_untaxed"/>
+        <t t-set="amount_tax" t-value="doc.amount_tax"/>
+        <t t-set="amount_total" t-value="doc.amount_total"/>
+        <t t-set="narration" t-value="doc.narration"/>
+        <t t-set="report_kind" t-value="'invoice'"/>
+        <t t-set="doc_number" t-value="doc.name"/>
+        <t t-set="info_rows" t-value="[
+            ('Number', doc.name or '/'),
+            ('Date', doc.invoice_date and doc.invoice_date.strftime('%Y-%m-%d') or ''),
+            ('Due Date', doc.invoice_date_due and doc.invoice_date_due.strftime('%Y-%m-%d') or ''),
+            ('Reference', doc.ref or ''),
+            ('Currency', currency.name or ''),
+        ]"/>
+
+        <div class="page">
+            <t t-call="sm_professional_reports.sm_pro_dispatcher"/>
+        </div>
+    </template>
+
+    <!-- Wrapper -->
+    <template id="report_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sm_professional_reports.report_invoice_document" t-lang="doc.partner_id.lang or env.user.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- Action -->
+    <record id="action_report_sm_invoice" model="ir.actions.report">
+        <field name="name">Professional Invoice</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sm_professional_reports.report_invoice</field>
+        <field name="report_file">sm_professional_reports.report_invoice</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_sm_pro_a4"/>
+        <field name="print_report_name">'Invoice - %s' % (object.name or '').replace('/', '_')</field>
+    </record>
+</odoo>

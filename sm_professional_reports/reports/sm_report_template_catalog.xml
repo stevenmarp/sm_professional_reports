@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CATALOG — Card-based line items (no traditional table).
+         Each line item rendered as a horizontal card block with
+         product image, description, and price details.
+         Completely different body structure from other templates. -->
+    <template id="sm_pro_template_catalog">
+        <!-- Header -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="vertical-align: middle;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 60px;"/>
+                    <div t-if="not company.logo" class="sm-pro-company-name"
+                         style="font-size: 20px; font-weight: bold;" t-out="company.name"/>
+                </td>
+                <td style="text-align: right; vertical-align: middle;">
+                    <div class="sm-pro-doc-title" style="font-size: 22px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </div>
+                    <div style="font-size: 13px; color: #666;" t-out="doc_number"/>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Thin separator -->
+        <hr t-attf-style="border: none; border-top: 2px solid #{style.theme_color or '#e91e63'}; margin: 0 0 14px 0;"/>
+
+        <!-- Partner + info -->
+        <table style="width: 100%; margin-bottom: 18px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    <div style="font-size: 10px; text-transform: uppercase; color: #999; margin-bottom: 4px;">
+                        <t t-if="report_kind == 'purchase'">Vendor</t>
+                        <t t-else="">Bill To</t>
+                    </div>
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="width: 50%; vertical-align: top; text-align: right;">
+                    <table style="margin-left: auto; font-size: 11px;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="color: #999; padding: 2px 8px; text-align: right;"
+                                t-out="row[0]"/>
+                            <td style="padding: 2px 0; font-weight: 600;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- CARD-BASED LINE ITEMS (custom — not shared sm_pro_lines_table) -->
+        <t t-set="line_num" t-value="0"/>
+        <t t-foreach="lines" t-as="line">
+            <t t-set="line_num" t-value="line_num + 1"/>
+            <div t-attf-style="border: 1px solid #e0e0e0; border-left: 4px solid #{style.theme_color or '#e91e63'};
+                               border-radius: 6px; padding: 12px; margin-bottom: 8px;
+                               #{('background: ' + (style.even_row_color or '#fce4ec') + ';') if line_num % 2 == 0 else ''}">
+                <table style="width: 100%;">
+                    <tr>
+                        <!-- Product image (if enabled) -->
+                        <t t-if="style.show_product_image and report_kind in ('sale','invoice','purchase','picking')">
+                            <t t-set="prod" t-value="line.product_id if 'product_id' in line._fields else False"/>
+                            <td t-if="prod and prod.image_128" style="width: 70px; vertical-align: top; padding-right: 12px;">
+                                <img t-att-src="image_data_uri(prod.image_128)"
+                                     style="max-width: 60px; max-height: 60px; border-radius: 4px;"/>
+                            </td>
+                        </t>
+                        <!-- Description -->
+                        <td style="vertical-align: top;">
+                            <div style="font-weight: bold; font-size: 12px;">
+                                <span t-if="style.show_row_number" style="color: #999; margin-right: 4px;">
+                                    #<t t-out="line_num"/>
+                                </span>
+                                <t t-if="'product_id' in line._fields and line.product_id"
+                                   t-out="line.product_id.display_name"/>
+                            </div>
+                            <div t-if="'name' in line._fields and line.name"
+                                 style="font-size: 10px; color: #777; margin-top: 2px; white-space: pre-line;"
+                                 t-out="line.name"/>
+                        </td>
+                        <!-- Qty + Price -->
+                        <td style="width: 200px; vertical-align: top; text-align: right; font-size: 11px;">
+                            <div style="margin-bottom: 3px;">
+                                <span style="color: #999;">Qty:</span>
+                                <t t-if="report_kind == 'invoice'">
+                                    <strong><t t-out="'%.2f' % (line.quantity or 0)"/></strong>
+                                    <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                                </t>
+                                <t t-elif="report_kind == 'sale'">
+                                    <strong><t t-out="'%.2f' % (line.product_uom_qty or 0)"/></strong>
+                                    <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                                </t>
+                                <t t-elif="report_kind == 'purchase'">
+                                    <strong><t t-out="'%.2f' % (line.product_qty or 0)"/></strong>
+                                    <t t-if="line.product_uom_id"> <t t-out="line.product_uom_id.name"/></t>
+                                </t>
+                                <t t-elif="report_kind == 'picking'">
+                                    <strong><t t-out="'%.2f' % (line.quantity or line.product_uom_qty or 0)"/></strong>
+                                    <t t-if="line.product_uom"> <t t-out="line.product_uom.name"/></t>
+                                </t>
+                            </div>
+                            <t t-if="report_kind in ('sale','invoice','purchase')">
+                                <div style="margin-bottom: 2px;">
+                                    <span style="color: #999;">Price:</span>
+                                    <span t-out="line.price_unit if 'price_unit' in line._fields else 0"
+                                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                </div>
+                                <div t-if="'discount' in line._fields and line.discount"
+                                     style="color: #e91e63; font-size: 10px;">
+                                    Disc: <t t-out="'%.0f' % (line.discount or 0)"/>%
+                                </div>
+                                <div t-attf-style="font-weight: bold; font-size: 13px; color: #{style.theme_color or '#e91e63'};
+                                                   margin-top: 4px; padding-top: 4px; border-top: 1px solid #eee;">
+                                    <span t-out="line.price_subtotal if 'price_subtotal' in line._fields else 0"
+                                          t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                </div>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+
+        <!-- Totals (shared block) -->
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 20px; padding: 10px;
+                    background: #fafafa; border-radius: 4px; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <div style="margin-top: 30px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>

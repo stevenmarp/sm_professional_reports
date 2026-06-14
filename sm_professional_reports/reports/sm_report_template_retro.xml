@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- RETRO — Based on asri_dev "Grid Formal" PO report
+         Centered company header, notice box, bottom-border-only rows,
+         3-column signature footer -->
+    <template id="sm_pro_template_retro">
+        <!-- Centered header -->
+        <table style="width: 100%; margin-bottom: 12px;">
+            <tr>
+                <td style="width: 15%; vertical-align: top;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 60px;"/>
+                </td>
+                <td style="text-align: center; vertical-align: top; line-height: 1.2;">
+                    <strong class="sm-pro-company-name" style="font-size: 16px;"
+                            t-out="company.name"/>
+                    <div style="font-size: 10px; color: #555;">
+                        <t t-if="company.street"><t t-out="company.street"/></t>
+                        <t t-if="company.city"><br/><t t-out="company.city"/>
+                            <t t-if="company.state_id">, <t t-out="company.state_id.name"/></t>
+                        </t>
+                        <t t-if="company.phone"><br/>Tel: <t t-out="company.phone"/></t>
+                    </div>
+                </td>
+                <td style="width: 15%;"/>
+            </tr>
+        </table>
+
+        <!-- Two-column: notice box + doc info -->
+        <table style="width: 100%; margin-bottom: 14px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    <div t-attf-style="border: 1px solid #{style.theme_color or '#8b5e3c'};
+                                        padding: 8px; font-size: 10px; margin-bottom: 8px;">
+                        PLEASE REFER TO THIS DOCUMENT NUMBER ON ALL CORRESPONDENCE.
+                    </div>
+                    <t t-call="sm_professional_reports.sm_pro_partner_block"/>
+                </td>
+                <td style="width: 50%; vertical-align: top; text-align: right;">
+                    <div class="sm-pro-doc-title" style="font-size: 20px; margin-bottom: 10px;">
+                        <t t-call="sm_professional_reports.sm_pro_doc_title"/>
+                    </div>
+                    <table class="sm-pro-info-table" style="width: 80%; margin-left: 20%;">
+                        <tr t-foreach="info_rows" t-as="row">
+                            <td style="font-size: 11px;" t-out="row[0]"/>
+                            <td style="width: 5%;">:</td>
+                            <td style="text-align: right; font-weight: bold;" t-out="row[1]"/>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <t t-call="sm_professional_reports.sm_pro_lines_table"/>
+        <t t-call="sm_professional_reports.sm_pro_totals"/>
+
+        <div t-if="narration" style="margin-top: 24px; padding: 10px; font-style: italic;
+                    border-top: 1px solid #ccc; clear: both;">
+            <div t-out="narration"/>
+        </div>
+
+        <!-- 3-column signature footer -->
+        <table style="width: 100%; margin-top: 30px;">
+            <tr>
+                <td style="width: 33%; text-align: center;">
+                    <div style="font-size: 10px; color: #999;">Prepared By</div>
+                    <div style="height: 50px;"/>
+                    <div style="border-top: 1px solid #999; width: 70%; margin: 0 auto;">___________</div>
+                </td>
+                <td style="width: 34%; text-align: center;">
+                    <div style="font-size: 10px; color: #999;">Acknowledged</div>
+                    <div style="height: 50px;"/>
+                    <div style="border-top: 1px solid #999; width: 70%; margin: 0 auto;">___________</div>
+                </td>
+                <td style="width: 33%; text-align: center;">
+                    <div style="font-size: 10px; color: #999;">Approved By</div>
+                    <div style="height: 50px;"/>
+                    <div style="border-top: 1px solid #999; width: 70%; margin: 0 auto;">___________</div>
+                </td>
+            </tr>
+        </table>
+        <div style="margin-top: 10px;"/>
+        <t t-call="sm_professional_reports.sm_pro_footer_block"/>
+    </template>
+</odoo>
